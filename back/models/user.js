@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(Home);
     }
     toJSON() {
-      return { ...this.get(), id: undefined, password: undefined };
+      return { ...this.get(), password: undefined };
     }
   }
   User.init(
