@@ -11,11 +11,13 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-size: 14px;
+    color: #343434;
   }
 
   button {
     background: transparent;
-    border:none;
+    border: none;
+    cursor: pointer;
   }
 
   a {

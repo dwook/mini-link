@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import ArrowLeft from '../icon/ArrowLeft';
 
 const Container = styled.div`
   max-width: 600px;
   padding-top: 20px;
   margin: 0 auto;
-  @media ${(props) => props.theme.mobile} {
-    padding: 20px 20px 0;
-  }
 `;
 
 const Top = styled.div`
@@ -22,8 +17,9 @@ const Top = styled.div`
   button {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 20px;
     padding: 2px;
+    cursor: pointer;
   }
 `;
 
@@ -33,31 +29,33 @@ const Title = styled.div`
   margin-bottom: 30px;
   font-size: 24px;
   text-align: center;
+  font-weight: bold;
 `;
 
-const Layout = ({ children, title }) => {
-  const router = useRouter();
-  const goBack = () => router.back();
-  return (
-    <Container>
-      <Top>
-        <button type="button" onClick={goBack}>
-          <ArrowLeft />
-        </button>
-        <Title>{title}</Title>
-      </Top>
-      {children}
-    </Container>
-  );
-};
+const Layout = ({ icon, title, action, children }) => (
+  <Container>
+    <Top>
+      <button type="button" onClick={action}>
+        {icon}
+      </button>
+      <Title>{title}</Title>
+    </Top>
+    {children}
+  </Container>
+);
 
 Layout.propTypes = {
-  children: PropTypes.elementType.isRequired,
+  icon: PropTypes.object,
   title: PropTypes.string,
+  action: PropTypes.func,
+  children: PropTypes.node,
 };
 
 Layout.defaultProps = {
+  icon: null,
   title: '',
+  action: null,
+  children: null,
 };
 
 export default Layout;

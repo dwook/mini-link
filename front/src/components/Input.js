@@ -4,6 +4,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  padding: 0 20px;
 `;
 
 const Input = styled.input`

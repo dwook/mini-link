@@ -2,10 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Button from './Button';
-
-const Logo = styled.img`
-  width: 200px;
-`;
+import Logo from '../icons/Logo';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -21,8 +18,11 @@ const HeaderContainer = styled.div`
 
 const Header = () => (
   <HeaderContainer>
-    <Logo src="/image/logo.png" alt="mini-link" />
-
+    <Link href="/">
+      <a>
+        <Logo width={200} />
+      </a>
+    </Link>
     <div>
       <Link href="/user/login">
         <Button>로그인</Button>

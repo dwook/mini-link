@@ -7,19 +7,20 @@ const size = {
 };
 
 const media = {
-  mobile: `(min-width: ${size.mobile}px)`,
-  tablet: `(min-width: ${size.tablet}px)`,
-  desktop: `(min-width: ${size.desktop}px)`,
+  mobile: `(max-width: ${size.mobile}px)`,
+  tablet: `(max-width: ${size.tablet}px)`,
+  desktop: `(max-width: ${size.desktop}px)`,
 };
 
 const color = {
-  red: '#ff5102',
-  blue: '#2d41ff',
-  green: '#00ad61',
+  red: '#ff525c',
+  orange: '#fc6b01',
+  blue: '#0983ff',
+  green: '#0ac67d',
   yellow: '#ffce00',
   black: '#000000',
   gray: '#e5e7e8',
-  primary: '#ff5102',
+  primary: '#ff525c',
 };
 
 const theme = {

@@ -5,6 +5,7 @@
 - Redux Toolkit
 - redux-saga
 - styled-component
+- react-hook-form
 
 ## Backend
 - Express

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArrowLeft = ({ size = 36, color = '#000000' }) => (
+const ArrowLeft = ({ size = 36, color = 'currentColor' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -15,4 +15,5 @@ const ArrowLeft = ({ size = 36, color = '#000000' }) => (
     <path d="M19 12H6M12 5l-7 7 7 7" />
   </svg>
 );
+
 export default ArrowLeft;

@@ -1,22 +1,32 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import AuthLayout from '../../src/components/AuthLayout';
+import Layout from '../../src/components/Layout';
 import Button from '../../src/components/Button';
-import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
+import {
+  Row,
+  Input,
+  Label,
+  ErrorMessage,
+} from '../../src/components/Input';
+import { ArrowLeft } from '../../src/icons';
 
 const Outro = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  padding: 0 20px;
 `;
 
 const login = () => {
+  const router = useRouter();
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
+  const goBack = () => router.back();
 
   return (
-    <AuthLayout title="로그인">
+    <Layout title="로그인" icon={<ArrowLeft />} action={goBack}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Label>아이디</Label>
@@ -43,7 +53,7 @@ const login = () => {
           </Button>
         </Outro>
       </form>
-    </AuthLayout>
+    </Layout>
   );
 };
 
