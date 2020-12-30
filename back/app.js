@@ -8,6 +8,7 @@ const dotenv = require("dotenv");
 const db = require("./models");
 const passportConfig = require("./passport");
 const userRouter = require("./routes/user");
+const linkRouter = require("./routes/link");
 
 const PORT = 5000;
 dotenv.config();
@@ -49,6 +50,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
+app.use("/link", linkRouter);
 
 app.listen(PORT, () => {
   console.log(`${PORT} 포트에서 서버 실행중`);
