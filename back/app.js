@@ -4,6 +4,8 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
 const dotenv = require("dotenv");
+const morgan = require('morgan');
+const path = require('path');
 
 const db = require("./models");
 const passportConfig = require("./passport");
@@ -22,6 +24,7 @@ db.sequelize
   })
   .catch(console.error);
 
+app.use(morgan('dev'));
 app.use(
   cors({
     origin: true,
@@ -29,6 +32,7 @@ app.use(
   })
 );
 
+app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));

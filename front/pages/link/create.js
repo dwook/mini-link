@@ -1,17 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import SwitchInput from '../../src/components/Switch';
 import Button from '../../src/components/Button';
-import {
-  Row,
-  Input,
-  Label,
-  ErrorMessage,
-} from '../../src/components/Input';
+import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
 import { Cross } from '../../src/icons';
 
 const Outro = styled.div`
@@ -37,13 +33,27 @@ const createLinkPage = () => {
   const router = useRouter();
   const { register, handleSubmit, watch, errors } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    axios.defaults.baseURL = 'http://localhost:5000';
+    axios.defaults.withCredentials = true;
+
+    console.log('보내는데이터', data);
+
+    const formData = new FormData();
+    formData.append('image', data.image[0]);
+    formData.append('name', data.name);
+    formData.append('url', data.url);
+    formData.append('public', data.public);
+
+    const result = await axios.post('/link', formData);
+    console.log(result);
+  };
   const goAdmin = () => router.push('/admin');
   const watchPublic = watch('public', false);
 
   return (
     <Layout title="링크 추가하기" icon={<Cross />} action={goAdmin}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <ImageUploadArea name="image" ref={register} />
         <Row>
           <Label>링크 이름</Label>

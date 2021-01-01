@@ -1,6 +1,6 @@
 import React, { useState, useRef, forwardRef, useCallback } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Upload from '../icons/Upload';
 import Delete from '../icons/Delete';
 import CircleButton from './CircleButton';
@@ -65,19 +65,16 @@ const ImageUploadArea = forwardRef(({ name, exImageURL }, ref) => {
   const onClickImageDelete = useCallback(() => {
     setImageURL(null);
   }, [imageURL]);
-  const onChangeImage = useCallback((e) => {
-    console.log('images', e.target.files, typeof e.target.files);
-    const imageFormData = new FormData();
-    imageFormData.append('image', e.target.files);
+  const onChangeImage = useCallback(async (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        console.log('type', typeof e.target.result);
         setImageURL(e.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
     }
   }, []);
+
   return (
     <StyledImageUploadArea image={imageURL}>
       <input
