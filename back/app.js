@@ -11,6 +11,7 @@ const db = require("./models");
 const passportConfig = require("./passport");
 const userRouter = require("./routes/user");
 const linkRouter = require("./routes/link");
+const homeRouter = require("./routes/home");
 
 const PORT = 5000;
 dotenv.config();
@@ -18,7 +19,7 @@ passportConfig();
 const app = express();
 
 db.sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     console.log("DB 연결 성공");
   })
@@ -32,7 +33,7 @@ app.use(
   })
 );
 
-app.use('/', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -55,6 +56,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRouter);
 app.use("/link", linkRouter);
+app.use("/home", homeRouter);
 
 app.listen(PORT, () => {
   console.log(`${PORT} 포트에서 서버 실행중`);

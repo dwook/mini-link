@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { isLoggedIn } = require('./middlewares');
 const router = express.Router();
-const linkController = require('../controller/link');
+const homeController = require('../controller/home');
 
 try {
   fs.accessSync('uploads');
@@ -25,15 +25,12 @@ const upload = multer({
   }),
 });
 
-router.get('/:linkId', isLoggedIn, linkController.getLink);
-router.get('/', isLoggedIn, linkController.getLinks);
-router.post('/', isLoggedIn, upload.single('image'), linkController.createLink);
+router.get('/:userId', isLoggedIn, homeController.getHome);
 router.patch(
-  '/:linkId',
+  '/:userId',
   isLoggedIn,
-  upload.single('image'),
-  linkController.editLink
+  upload.single('coverImage'),
+  homeController.editHome
 );
-router.delete('/:linkId', isLoggedIn, linkController.deleteLink);
 
 module.exports = router;

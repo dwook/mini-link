@@ -1,9 +1,9 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Link extends Model {
-    static associate({ Home }) {
-      this.belongsTo(Home);
+    static associate({ User }) {
+      this.belongsTo(User);
     }
   }
   Link.init(
@@ -24,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Link",
-      tableName: "links",
-      charset: "utf8mb4",
-      collate: "utf8mb4_general_ci", // 이모티콘 저장
+      modelName: 'Link',
+      tableName: 'links',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci', // 이모티콘 저장
     }
   );
   return Link;

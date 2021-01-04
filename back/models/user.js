@@ -1,9 +1,10 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate({ Home }) {
+    static associate({ Home, Link }) {
       this.hasOne(Home);
+      this.hasMany(Link);
     }
     toJSON() {
       return { ...this.get(), password: undefined };
@@ -27,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "User",
-      tableName: "users",
-      charset: "utf8",
-      collate: "utf8_general_ci", // 한글 저장
+      modelName: 'User',
+      tableName: 'users',
+      charset: 'utf8',
+      collate: 'utf8_general_ci', // 한글 저장
     }
   );
   return User;
