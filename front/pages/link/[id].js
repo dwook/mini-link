@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { END } from 'redux-saga';
+import axios from 'axios';
+import wrapper from '../../store';
+import { linkAction } from '../../feature/Link/slice';
+import { backURL } from '../../config';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import SwitchInput from '../../src/components/Switch';
@@ -30,19 +36,45 @@ const SwitchContainer = styled.div`
 
 const editLinkPage = () => {
   const router = useRouter();
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { id } = router.query;
+  const dispatch = useDispatch();
+  const { selectedLink, editLinkDone } = useSelector((state) => state.link);
+  const { register, handleSubmit, watch, errors } = useForm({
+    defaultValues: {
+      name: selectedLink?.name,
+      url: selectedLink?.url,
+      public: selectedLink?.public,
+    },
+  });
 
-  const onSubmit = (data) => console.log(data);
+  useEffect(() => {
+    if (editLinkDone) {
+      router.push('/admin');
+    }
+  }, [editLinkDone]);
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    if (data.image[0]) {
+      formData.append('image', data.image[0]);
+    }
+    formData.append('name', data.name);
+    formData.append('url', data.url);
+    formData.append('public', data.public);
+    formData.append('linkId', id);
+    dispatch(linkAction.editLinkRequest(formData));
+  };
+
   const goAdmin = () => router.push('/admin');
-  const watchPublic = watch('public', false);
+  const watchPublic = watch('public');
 
   return (
-    <Layout title="링크 수정하기" icon={<Cross />} action={goAdmin}>
+    <Layout title="링크 수정하기" icon={<Cross />} onClick={goAdmin}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ImageUploadArea
           name="image"
           ref={register}
-          exImageURL="https://cdn2.sylvanianfamilies.com/includes_gl/img/category/top_4.jpg"
+          exImageURL={`'${backURL}/${selectedLink?.image}'`}
         />
         <Row>
           <Label>링크 이름</Label>
@@ -84,4 +116,17 @@ const editLinkPage = () => {
   );
 };
 
-export default editLinkPage;
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    context.store.dispatch(linkAction.getLinkRequest(context.params.id));
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
+
+export default connect((state) => state)(editLinkPage);

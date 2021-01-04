@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { linkAction } from '../../feature/Link/slice';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import SwitchInput from '../../src/components/Switch';
@@ -31,28 +32,32 @@ const SwitchContainer = styled.div`
 
 const createLinkPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { createLinkDone } = useSelector((state) => state.link);
   const { register, handleSubmit, watch, errors } = useForm();
 
+  useEffect(() => {
+    if (createLinkDone) {
+      router.push('/admin');
+    }
+  }, [createLinkDone]);
+  useEffect(() => {
+    dispatch(linkAction.createLinkReset());
+  }, []);
+
   const onSubmit = async (data) => {
-    axios.defaults.baseURL = 'http://localhost:5000';
-    axios.defaults.withCredentials = true;
-
-    console.log('보내는데이터', data);
-
     const formData = new FormData();
     formData.append('image', data.image[0]);
     formData.append('name', data.name);
     formData.append('url', data.url);
     formData.append('public', data.public);
-
-    const result = await axios.post('/link', formData);
-    console.log(result);
+    dispatch(linkAction.createLinkRequest(formData));
   };
   const goAdmin = () => router.push('/admin');
   const watchPublic = watch('public', false);
 
   return (
-    <Layout title="링크 추가하기" icon={<Cross />} action={goAdmin}>
+    <Layout title="링크 추가하기" icon={<Cross />} onClick={goAdmin}>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <ImageUploadArea name="image" ref={register} />
         <Row>
@@ -69,7 +74,6 @@ const createLinkPage = () => {
           <Label>링크 주소</Label>
           <Input
             name="url"
-            type="url"
             inputmode="url"
             ref={register({
               required: '연결하고 싶은 링크 주소를 입력해주세요.',

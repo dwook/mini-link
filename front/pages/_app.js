@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
+import wrapper from '../store';
 import GlobalStyle from '../src/style/global';
 import theme from '../src/style/theme';
 
@@ -17,4 +18,4 @@ App.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
 
-export default App;
+export default wrapper.withRedux(App);

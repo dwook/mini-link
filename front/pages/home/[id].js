@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { END } from 'redux-saga';
+import axios from 'axios';
+import wrapper from '../../store';
+import { homeAction } from '../../feature/Home/slice';
+import { backURL } from '../../config';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import Button from '../../src/components/Button';
-import {
-  Row,
-  Input,
-  Label,
-  ErrorMessage,
-} from '../../src/components/Input';
+import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
 import { Cross } from '../../src/icons';
 
 const Outro = styled.div`
@@ -20,20 +21,47 @@ const Outro = styled.div`
   padding: 0 20px;
 `;
 
-const createLinkPage = () => {
+const editHomePage = () => {
   const router = useRouter();
-  const { register, handleSubmit, errors } = useForm();
+  const { id } = router.query;
+  const dispatch = useDispatch();
+  const { selectedHome, editHomeDone } = useSelector((state) => state.home);
+  const { register, handleSubmit, errors } = useForm({
+    defaultValues: {
+      introduction: selectedHome?.introduction,
+      instagram: selectedHome?.instagram,
+      youtube: selectedHome?.youtube,
+      website: selectedHome?.website,
+    },
+  });
 
-  const onSubmit = (data) => console.log(data);
+  useEffect(() => {
+    if (editHomeDone) {
+      router.push('/admin');
+    }
+  }, [editHomeDone]);
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    if (data.image[0]) {
+      formData.append('coverImage', data.image[0]);
+    }
+    formData.append('introduction', data.introduction);
+    formData.append('instagram', data.instagram);
+    formData.append('youtube', data.youtube);
+    formData.append('website', data.website);
+    formData.append('userId', id);
+    dispatch(homeAction.editHomeRequest(formData));
+  };
   const goAdmin = () => router.push('/admin');
 
   return (
-    <Layout title="커버 수정하기" icon={<Cross />} action={goAdmin}>
+    <Layout title="커버 수정하기" icon={<Cross />} onClick={goAdmin}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ImageUploadArea
           name="image"
           ref={register}
-          exImageURL="https://cdn2.sylvanianfamilies.com/includes_gl/img/category/top_4.jpg"
+          exImageURL={`'${backURL}/${selectedHome?.coverImage}'`}
         />
         <Row>
           <Label>소개글</Label>
@@ -49,7 +77,6 @@ const createLinkPage = () => {
           <Label>웹사이트</Label>
           <Input
             name="website"
-            type="url"
             inputmode="url"
             placeholder="웹사이트 전체 주소를 입력해주세요."
             ref={register}
@@ -60,7 +87,6 @@ const createLinkPage = () => {
           <Label>인스타그램</Label>
           <Input
             name="instagram"
-            type="url"
             inputmode="url"
             placeholder="@를 제외한 아이디만 입력해주세요."
             ref={register}
@@ -71,7 +97,6 @@ const createLinkPage = () => {
           <Label>유투브</Label>
           <Input
             name="youtube"
-            type="url"
             inputmode="url"
             placeholder="채널 전체 주소를 입력해주세요."
             ref={register}
@@ -88,4 +113,18 @@ const createLinkPage = () => {
   );
 };
 
-export default createLinkPage;
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    context.store.dispatch(homeAction.getHomeRequest(context.params.id));
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
+
+export default connect((state) => state)(editHomePage);

@@ -1,32 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { userAction } from '../../feature/User/slice';
 import Layout from '../../src/components/Layout';
 import Button from '../../src/components/Button';
-import {
-  Row,
-  Input,
-  Label,
-  ErrorMessage,
-} from '../../src/components/Input';
+import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
 import { ArrowLeft } from '../../src/icons';
-
-const Outro = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  padding: 0 20px;
-`;
 
 const login = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.user.userInfo);
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/admin');
+    }
+  }, [userInfo]);
+
+  const onSubmit = (data) => {
+    dispatch(userAction.logInRequest(data));
+  };
   const goBack = () => router.back();
 
   return (
-    <Layout title="로그인" icon={<ArrowLeft />} action={goBack}>
+    <Layout title="로그인" icon={<ArrowLeft />} onClick={goBack}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Label>아이디</Label>
@@ -41,7 +42,6 @@ const login = () => {
           <Input
             name="password"
             type="password"
-            placeholder="●●●●●●●●"
             autoComplete="off"
             ref={register({ required: '비밀번호를 입력해주세요.' })}
           />
@@ -56,5 +56,12 @@ const login = () => {
     </Layout>
   );
 };
+
+const Outro = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 0 20px;
+`;
 
 export default login;
