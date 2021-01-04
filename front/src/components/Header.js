@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { userAction } from '../../feature/User/slice';
 import Button from './Button';
 import Logo from '../icons/Logo';
 
@@ -11,27 +13,52 @@ const HeaderContainer = styled.div`
   margin: 0 auto;
   max-width: ${(props) => props.theme.size.desktop}px;
   justify-content: space-between;
-  ${Button} {
+  button {
     margin-left: 10px;
   }
 `;
 
-const Header = () => (
-  <HeaderContainer>
-    <Link href="/">
-      <a>
-        <Logo width={200} />
-      </a>
-    </Link>
-    <div>
-      <Link href="/user/login">
-        <Button>로그인</Button>
+const Header = () => {
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const dispatch = useDispatch();
+  const onLogoutClick = () => {
+    dispatch(userAction.logOutRequest());
+  };
+  return (
+    <HeaderContainer>
+      <Link href="/">
+        <a>
+          <Logo width={200} />
+        </a>
       </Link>
-      <Link href="/user/signup">
-        <Button primary>무료회원가입</Button>
-      </Link>
-    </div>
-  </HeaderContainer>
-);
+      <div>
+        {userInfo && (
+          <>
+            <Button onClick={onLogoutClick}>로그아웃</Button>
+            <Link href="/admin">
+              <a>
+                <Button primary>관리자</Button>
+              </a>
+            </Link>
+          </>
+        )}
+        {!userInfo && (
+          <>
+            <Link href="/user/login">
+              <a>
+                <Button>로그인</Button>
+              </a>
+            </Link>
+            <Link href="/user/signup">
+              <a>
+                <Button primary>무료회원가입</Button>
+              </a>
+            </Link>
+          </>
+        )}
+      </div>
+    </HeaderContainer>
+  );
+};
 
 export default Header;

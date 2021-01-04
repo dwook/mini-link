@@ -35,7 +35,7 @@ const ButtonContainer = styled.div`
 
 const ButtonList = styled.div`
   width: 100%;
-  postion: relative;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

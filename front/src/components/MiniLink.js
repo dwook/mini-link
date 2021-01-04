@@ -56,13 +56,13 @@ const MiniLink = ({ href, children }) => {
 };
 
 MiniLink.propTypes = {
-  href: PropTypes.string,
   children: PropTypes.node,
+  href: PropTypes.string,
 };
 
 MiniLink.defaultProps = {
-  href: '',
   children: '',
+  href: '',
 };
 
 export default MiniLink;

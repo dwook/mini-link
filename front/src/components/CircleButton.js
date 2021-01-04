@@ -30,7 +30,7 @@ const StyledCircleButton = styled.button`
   }}
 `;
 
-const CircleButton = ({ outsite, icon, href, onClick, primary }) => {
+const CircleButton = ({ outsite, icon, href, primary, onClick }) => {
   if (outsite && href) {
     return (
       <a href={href}>
@@ -43,9 +43,11 @@ const CircleButton = ({ outsite, icon, href, onClick, primary }) => {
   if (!outsite && href) {
     return (
       <Link href={href}>
-        <StyledCircleButton type="button" primary={primary}>
-          {icon}
-        </StyledCircleButton>
+        <a>
+          <StyledCircleButton type="button" primary={primary}>
+            {icon}
+          </StyledCircleButton>
+        </a>
       </Link>
     );
   }
@@ -60,16 +62,16 @@ CircleButton.propTypes = {
   outsite: PropTypes.bool,
   icon: PropTypes.node,
   href: PropTypes.string,
-  onClick: PropTypes.func,
   primary: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 CircleButton.defaultProps = {
   outsite: false,
   icon: '',
   href: null,
-  onClick: null,
   primary: false,
+  onClick: null,
 };
 
 export default CircleButton;

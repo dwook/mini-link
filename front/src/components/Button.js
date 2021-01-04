@@ -1,6 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Button = styled.button`
+const StyledButton = styled.button`
   border-radius: 6px;
   border: none;
   padding: 0 20px;
@@ -35,6 +37,35 @@ const Button = styled.button`
     font-size: 14px;
   `;
   }}
+  ${(props) => {
+    if (props.full) {
+      return `
+      width: 100%;
+  `;
+    }
+  }}
 `;
+
+const Button = ({ children, primary, big, full, onClick }) => (
+  <StyledButton primary={primary} big={big} full={full} onClick={onClick}>
+    {children}
+  </StyledButton>
+);
+
+Button.propTypes = {
+  children: PropTypes.node,
+  primary: PropTypes.bool,
+  big: PropTypes.bool,
+  full: PropTypes.bool,
+  onClick: PropTypes.func,
+};
+
+Button.defaultProps = {
+  children: null,
+  primary: false,
+  big: false,
+  full: false,
+  onClick: null,
+};
 
 export default Button;

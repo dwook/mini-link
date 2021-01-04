@@ -26,7 +26,7 @@ const StyledCoverButton = styled.button`
   margin: 2px;
 `;
 
-const CoverButton = ({ outsite, icon, href, onClick, children }) => {
+const CoverButton = ({ children, outsite, icon, href, onClick }) => {
   if (outsite && href) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer">
@@ -56,19 +56,19 @@ const CoverButton = ({ outsite, icon, href, onClick, children }) => {
 };
 
 CoverButton.propTypes = {
+  children: PropTypes.node,
   outsite: PropTypes.bool,
   icon: PropTypes.node,
   href: PropTypes.string,
   onClick: PropTypes.func,
-  children: PropTypes.node,
 };
 
 CoverButton.defaultProps = {
+  children: null,
   outsite: false,
   icon: '',
   href: null,
   onClick: null,
-  children: null,
 };
 
 export { CoverImage, CoverButtonList, CoverButton };

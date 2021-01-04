@@ -32,10 +32,10 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-const Layout = ({ icon, title, action, children }) => (
+const Layout = ({ icon, title, onClick, children }) => (
   <Container>
     <Top>
-      <button type="button" onClick={action}>
+      <button type="button" onClick={onClick}>
         {icon}
       </button>
       <Title>{title}</Title>
@@ -47,14 +47,14 @@ const Layout = ({ icon, title, action, children }) => (
 Layout.propTypes = {
   icon: PropTypes.object,
   title: PropTypes.string,
-  action: PropTypes.func,
+  onClick: PropTypes.func,
   children: PropTypes.node,
 };
 
 Layout.defaultProps = {
   icon: null,
   title: '',
-  action: null,
+  onClick: null,
   children: null,
 };
 
