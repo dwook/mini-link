@@ -32,13 +32,16 @@ exports.getLinks = async (req, res, next) => {
 
 exports.createLink = async (req, res, next) => {
   try {
-    const link = await Link.create({
+    const createdLink = {
       name: req.body.name,
       url: req.body.url,
-      image: req.file.path,
       public: req.body.public,
       UserId: req.user.id,
-    });
+    };
+    if (req.file) {
+      createdLink.image = req.file.path;
+    }
+    const link = await Link.create(createdLink);
     res.status(200).json(link);
   } catch (error) {
     console.error(error);
