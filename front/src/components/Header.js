@@ -8,11 +8,12 @@ import Logo from '../icons/Logo';
 
 const HeaderContainer = styled.div`
   display: flex;
-  flex-dirction: row;
+  flex-direction: row;
   padding: 20px;
   margin: 0 auto;
   max-width: ${(props) => props.theme.size.desktop}px;
   justify-content: space-between;
+  align-items: center;
   button {
     margin-left: 10px;
   }

@@ -9,6 +9,9 @@ const CoverImage = styled.div`
   padding-top: 20px;
   margin: 0 auto;
   position: relative;
+  background-image: url(${(props) => props.imageURL});
+  background-size: cover;
+  background-position: center;
 `;
 
 const CoverButtonList = styled.div`

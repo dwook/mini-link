@@ -16,9 +16,10 @@ import Button from '../src/components/Button';
 import CircleButton from '../src/components/CircleButton';
 import Badge from '../src/components/Badge';
 import { Edit, Delete } from '../src/icons';
+import { backURL } from '../config';
 
 const Header = styled.div`
-  background-color: ${(props) => props.theme.color.yellow};
+  background-color: ${(props) => props.mainColor || props.theme.color.yellow};
   height: 240px;
 `;
 
@@ -32,7 +33,7 @@ const Section = styled.div`
   flex-direction: column;
   padding: 20px;
   & + & {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(238, 245, 250);
   }
 `;
 
@@ -47,6 +48,7 @@ const Admin = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { userLinks, deleteLinkDone } = useSelector((state) => state.link);
+  const { selectedHome } = useSelector((state) => state.home);
   const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -67,8 +69,8 @@ const Admin = () => {
 
   return (
     <>
-      <Header>
-        <CoverImage>
+      <Header mainColor={selectedHome?.mainColor}>
+        <CoverImage imageURL={`'${backURL}/${selectedHome?.coverImage}'`}>
           <CoverButtonList>
             <CoverButton onClick={onLogoutClick}>로그아웃</CoverButton>
             <CoverButton href={`/home/${userInfo?.id}`}>
@@ -92,7 +94,7 @@ const Admin = () => {
           <Title>링크 관리하기</Title>
           {userLinks &&
             userLinks.map((link) => (
-              <MiniLink key={link.id}>
+              <MiniLink key={link.id} imageURL={`'${backURL}/${link.image}'`}>
                 <div className="content">
                   <p className="title">{link.name}</p>
                   {link.public ? (

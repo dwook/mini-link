@@ -25,7 +25,7 @@ const StyledCircleButton = styled.button`
     }
     return `
       background: ${props.theme.color.gray};
-      color: #000;
+      color: ${props.theme.color.black};
     `;
   }}
 `;

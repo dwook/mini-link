@@ -10,14 +10,16 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    font-family: -apple-system,BlinkMacSystemFont,Apple SD Gothic Neo,Inter,Spoqa Han Sans,Segoe UI,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
     font-size: 14px;
-    color: #343434;
+    color: #2c3848;
   }
 
   button {
     background: transparent;
     border: none;
     cursor: pointer;
+    color: #2c3848;
   }
 
   a {

@@ -18,8 +18,10 @@ const color = {
   blue: '#0983ff',
   green: '#0ac67d',
   yellow: '#ffce00',
-  black: '#000000',
-  gray: '#e5e7e8',
+  black: '#2c3848',
+  darkgray: '#4a5668',
+  gray: '#eef5fa',
+  lightgray: '#edf1f7',
   primary: '#ff525c',
 };
 

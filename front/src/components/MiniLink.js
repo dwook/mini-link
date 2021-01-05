@@ -15,7 +15,7 @@ const StyledMiniLink = styled.div`
   position: relative;
   .content {
     text-align: left;
-    color: gray;
+    color: ${(props) => props.theme.color.darkgray};
     font-size: 16px;
     padding: 0 20px;
     .title {
@@ -30,18 +30,20 @@ const StyledMiniLink = styled.div`
 `;
 
 const Thumbnail = styled.div`
-  background: rgba(0, 0, 0, 0.1);
+  background: ${(props) => props.theme.color.gray};
   width: 80px;
   height: 100%;
   position: relative;
+  background-image: url(${(props) => props.imageURL});
+  background-size: cover;
 `;
 
-const MiniLink = ({ href, children }) => {
+const MiniLink = ({ href, imageURL, children }) => {
   if (href) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer">
         <StyledMiniLink>
-          <Thumbnail />
+          <Thumbnail imageURL={imageURL} />
           {children}
         </StyledMiniLink>
       </a>
@@ -49,20 +51,22 @@ const MiniLink = ({ href, children }) => {
   }
   return (
     <StyledMiniLink>
-      <Thumbnail />
+      <Thumbnail imageURL={imageURL} />
       {children}
     </StyledMiniLink>
   );
 };
 
 MiniLink.propTypes = {
-  children: PropTypes.node,
   href: PropTypes.string,
+  imageURL: PropTypes.string,
+  children: PropTypes.node,
 };
 
 MiniLink.defaultProps = {
-  children: '',
   href: '',
+  imageURL: PropTypes.string,
+  children: '',
 };
 
 export default MiniLink;
