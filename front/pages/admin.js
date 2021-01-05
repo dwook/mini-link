@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { userAction } from '../feature/User/slice';
 import { linkAction } from '../feature/Link/slice';
 import { homeAction } from '../feature/Home/slice';
 import MiniLink from '../src/components/MiniLink';
@@ -42,6 +44,7 @@ const Title = styled.div`
 `;
 
 const Admin = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { userLinks, deleteLinkDone } = useSelector((state) => state.link);
   const { userInfo } = useSelector((state) => state.user);
@@ -57,11 +60,17 @@ const Admin = () => {
     dispatch(linkAction.deleteLinkRequest(id));
   };
 
+  const onLogoutClick = () => {
+    dispatch(userAction.logOutRequest());
+    router.push('/');
+  };
+
   return (
     <>
       <Header>
         <CoverImage>
           <CoverButtonList>
+            <CoverButton onClick={onLogoutClick}>로그아웃</CoverButton>
             <CoverButton href={`/home/${userInfo?.id}`}>
               커버 수정하기
             </CoverButton>
