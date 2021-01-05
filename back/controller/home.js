@@ -1,4 +1,14 @@
 const { Home } = require('../models');
+const ColorThief = require('colorthief');
+
+const rgbToHex = (r, g, b) =>
+  '#' +
+  [r, g, b]
+    .map((x) => {
+      const hex = x.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    })
+    .join('');
 
 exports.getHome = async (req, res, next) => {
   try {
@@ -23,6 +33,9 @@ exports.editHome = async (req, res, next) => {
       website: req.body.website,
     };
     if (req.file) {
+      const color = await ColorThief.getColor(req.file.path);
+      const mainColor = rgbToHex(color[0], color[1], color[2]);
+      editedHome.mainColor = mainColor;
       editedHome.coverImage = req.file.path;
     }
     await Home.update(editedHome, {

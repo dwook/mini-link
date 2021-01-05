@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   Home.init(
     {
       coverImage: DataTypes.STRING,
+      mainColor: DataTypes.STRING,
       introduction: DataTypes.STRING,
       instagram: DataTypes.STRING,
       youtube: DataTypes.STRING,
