@@ -17,11 +17,16 @@ const StyledButton = styled.button`
         color: #fff;
         box-shadow: ${props.theme.color.primary}4D 0px 4px 8px 0px,
         ${props.theme.color.primary}40 0px 2px 4px 0px;
+        &:hover {
+          box-shadow: ${props.theme.color.primary}4D 0px 4px 8px 0px;
+        }
     `;
     }
     return `
-      background: ${props.theme.color.gray};
-      color: #000;
+      box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
+      &:hover {
+        box-shadow: 0 6px 20px rgba(93,93,93,0.23);
+      }
     `;
   }}
   ${(props) => {
