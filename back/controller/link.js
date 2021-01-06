@@ -1,4 +1,4 @@
-const { Link } = require('../models');
+const { Link, User } = require('../models');
 
 exports.getLink = async (req, res, next) => {
   try {
@@ -17,12 +17,31 @@ exports.getLink = async (req, res, next) => {
 
 exports.getLinks = async (req, res, next) => {
   try {
-    const links = await Link.findAll({
+    console.log('유저네임', req.query.username);
+    console.log('유저쿠키', req.user?.id);
+    const user = await User.findOne({
       where: {
-        UserId: req.user.id,
+        username: req.query.username,
       },
     });
-    console.log(links);
+    console.log('유저아이디', req.user?.id, user.id);
+    let links;
+    if (req.user && req.user?.id === user.id && req.query.public !== '1') {
+      // 어드민용
+      links = await Link.findAll({
+        where: {
+          UserId: user.id,
+        },
+      });
+    } else {
+      // 공개용
+      links = await Link.findAll({
+        where: {
+          UserId: user.id,
+          public: true,
+        },
+      });
+    }
     res.status(200).json(links);
   } catch (error) {
     console.error(error);

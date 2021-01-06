@@ -2,13 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   userInfo: null,
+  getMyInfoLoading: true,
+  getMyInfoDone: false,
+  getMyInfoError: null,
   signUpLoading: false,
   signUpDone: false,
   signUpError: null,
-  checkUsernameResult: null,
-  checkUsernameLoading: false,
-  checkUsernameDone: false,
-  checkUsernameError: null,
+  checkUserExistResult: null,
+  checkUserExistLoading: false,
+  checkUserExistDone: false,
+  checkUserExistError: null,
   logInLoading: false,
   logInDone: false,
   logInError: null,
@@ -18,11 +21,25 @@ export const initialState = {
 };
 
 const reducers = {
+  getMyInfoRequest: (state) => {
+    state.getMyInfoLoading = true;
+    state.getMyInfoDone = false;
+    state.getMyInfoError = null;
+  },
+  getMyInfoSuccess: (state, { payload: { data } }) => {
+    state.getMyInfoLoading = false;
+    state.getMyInfoDone = true;
+    state.userInfo = data;
+  },
+  getMyInfoFailure: (state, { payload: error }) => {
+    state.getMyInfoLoading = false;
+    state.getMyInfoError = error.message;
+  },
   signUpReset: (state) => {
     state.signUpLoading = false;
     state.signUpDone = false;
     state.signUpError = null;
-    state.checkUsernameResult = '';
+    state.checkUserExistResult = null;
   },
   signUpRequest: (state) => {
     state.signUpLoading = true;
@@ -37,19 +54,19 @@ const reducers = {
     state.signUpLoading = false;
     state.signUpError = error.message;
   },
-  checkUsernameRequest: (state) => {
-    state.checkUsernameLoading = true;
-    state.checkUsernameDone = false;
-    state.checkUsernameError = null;
+  checkUserExistRequest: (state) => {
+    state.checkUserExistLoading = true;
+    state.checkUserExistDone = false;
+    state.checkUserExistError = null;
   },
-  checkUsernameSuccess: (state, { payload: { data } }) => {
-    state.checkUsernameLoading = false;
-    state.checkUsernameDone = true;
-    state.checkUsernameResult = data;
+  checkUserExistSuccess: (state, { payload: { data } }) => {
+    state.checkUserExistLoading = false;
+    state.checkUserExistDone = true;
+    state.checkUserExistResult = data;
   },
-  checkUsernameFailure: (state, { payload: error }) => {
-    state.checkUsernameLoading = false;
-    state.checkUsernameError = error.message;
+  checkUserExistFailure: (state, { payload: error }) => {
+    state.checkUserExistLoading = false;
+    state.checkUserExistError = error.message;
   },
   logInRequest: (state) => {
     state.logInLoading = true;

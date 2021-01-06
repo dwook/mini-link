@@ -25,6 +25,9 @@ const reducers = {
     state.getHomeLoading = false;
     state.getHomeError = error.message;
   },
+  editHomeReset: (state) => {
+    state.selectedHome = null;
+  },
   editHomeRequest: (state) => {
     state.editHomeLoading = true;
     state.editHomeDone = false;
@@ -44,6 +47,11 @@ const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers,
+  extraReducers: {
+    'user/logOutRequest': (state, action) => {
+      state.selectedHome = null;
+    },
+  },
 });
 
 export const homeReducer = homeSlice.reducer;

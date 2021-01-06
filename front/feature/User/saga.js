@@ -2,6 +2,25 @@ import axios from 'axios';
 import { call, put, takeLatest, debounce } from 'redux-saga/effects';
 import { userAction } from './slice';
 
+function getMyInfoAPI(data) {
+  return axios.get('/user', data);
+}
+
+function* getMyInfo(action) {
+  try {
+    const result = yield call(getMyInfoAPI, action.payload);
+    console.log(result);
+    yield put(userAction.getMyInfoSuccess(result));
+  } catch (error) {
+    console.error(error);
+    yield put(userAction.getMyInfoFailure(error));
+  }
+}
+
+export function* watchGetMyInfo() {
+  yield takeLatest(userAction.getMyInfoRequest, getMyInfo);
+}
+
 function signUpAPI(data) {
   return axios.post('/user', data);
 }
@@ -21,23 +40,23 @@ export function* watchSignUp() {
   yield takeLatest(userAction.signUpRequest, signUp);
 }
 
-function checkUsernameAPI(data) {
+function checkUserExistAPI(data) {
   return axios.post('/user/check', { username: data });
 }
 
-function* checkUsername(action) {
+function* checkUserExist(action) {
   try {
-    const result = yield call(checkUsernameAPI, action.payload);
+    const result = yield call(checkUserExistAPI, action.payload);
     console.log(result);
-    yield put(userAction.checkUsernameSuccess(result));
+    yield put(userAction.checkUserExistSuccess(result));
   } catch (error) {
     console.error(error);
-    yield put(userAction.checkUsernameFailure(error));
+    yield put(userAction.checkUserExistFailure(error));
   }
 }
 
-export function* watchCheckUsername() {
-  yield debounce(500, userAction.checkUsernameRequest, checkUsername);
+export function* watchCheckUserExist() {
+  yield debounce(500, userAction.checkUserExistRequest, checkUserExist);
 }
 
 function logInAPI(data) {

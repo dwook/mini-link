@@ -21,8 +21,8 @@ export function* watchGetLink() {
   yield takeLatest(linkAction.getLinkRequest, getLink);
 }
 
-function getLinksAPI() {
-  return axios.get('/link');
+function getLinksAPI(username) {
+  return axios.get(`/link?username=${username}`);
 }
 
 function* getLinks(action) {

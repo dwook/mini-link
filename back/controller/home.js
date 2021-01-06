@@ -1,4 +1,4 @@
-const { Home } = require('../models');
+const { User, Home } = require('../models');
 const ColorThief = require('colorthief');
 
 const rgbToHex = (r, g, b) =>
@@ -12,9 +12,16 @@ const rgbToHex = (r, g, b) =>
 
 exports.getHome = async (req, res, next) => {
   try {
+    console.log('유저네임', req.params.username);
+    const user = await User.findOne({
+      where: {
+        username: req.params.username,
+      },
+    });
+    console.log('유저아이디', user.id);
     const home = await Home.findOne({
       where: {
-        userId: req.user.id,
+        UserId: user.id,
       },
     });
     res.status(200).json(home);

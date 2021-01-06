@@ -2,6 +2,25 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { User, Home } = require('../models');
 
+exports.getMyInfo = async (req, res, next) => {
+  try {
+    if (req.user) {
+      const userInfo = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ['password'],
+        },
+      });
+      res.status(200).json(userInfo);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
 exports.signUp = async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
@@ -25,7 +44,7 @@ exports.signUp = async (req, res, next) => {
   }
 };
 
-exports.checkUsername = async (req, res, next) => {
+exports.checkUserExist = async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
@@ -33,9 +52,9 @@ exports.checkUsername = async (req, res, next) => {
       },
     });
     if (exUser) {
-      return res.send('이미 사용중인 아이디입니다.');
+      return res.send(true);
     }
-    res.send('사용가능한 아이디입니다.');
+    res.send(false);
   } catch (error) {
     console.error(error);
     next(error);
@@ -67,6 +86,8 @@ exports.login = (req, res, next) => {
 
 exports.logout = (req, res) => {
   req.logout();
-  req.session.destroy();
-  res.send('ok');
+  req.session.destroy(() => {
+    res.clearCookie('connect.sid');
+    res.redirect('/');
+  });
 };

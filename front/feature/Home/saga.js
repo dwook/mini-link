@@ -2,8 +2,8 @@ import axios from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { homeAction } from './slice';
 
-function getHomeAPI(userId) {
-  return axios.get(`/home/${userId}`);
+function getHomeAPI(username) {
+  return axios.get(`/home/${username}`);
 }
 
 function* getHome(action) {

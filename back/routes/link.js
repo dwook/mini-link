@@ -26,7 +26,7 @@ const upload = multer({
 });
 
 router.get('/:linkId', isLoggedIn, linkController.getLink);
-router.get('/', isLoggedIn, linkController.getLinks);
+router.get('/', linkController.getLinks);
 router.post('/', isLoggedIn, upload.single('image'), linkController.createLink);
 router.patch(
   '/:linkId',

@@ -25,7 +25,7 @@ const upload = multer({
   }),
 });
 
-router.get('/:userId', isLoggedIn, homeController.getHome);
+router.get('/:username', homeController.getHome);
 router.patch(
   '/:userId',
   isLoggedIn,
