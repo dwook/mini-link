@@ -5,18 +5,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { userAction } from '../../feature/User/slice';
-import AuthLayout from '../../src/components/Layout';
+import Layout from '../../src/components/Layout';
 import Button from '../../src/components/Button';
-import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
+import {
+  Row,
+  Input,
+  Label,
+  Message,
+  Error,
+  Info,
+} from '../../src/components/Input';
 import { ArrowLeft } from '../../src/icons';
 
 const sigunp = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const signUpDone = useSelector((state) => state.user.signUpDone);
-  const checkUsernameResult = useSelector(
-    (state) => state.user.checkUsernameResult
-  );
+  const { checkUserExistResult } = useSelector((state) => state.user);
   const { register, handleSubmit, watch, errors } = useForm();
   const username = useRef();
   username.current = watch('username');
@@ -29,7 +34,7 @@ const sigunp = () => {
   useEffect(() => {
     if (username.current) {
       console.log(username, username.current);
-      dispatch(userAction.checkUsernameRequest(username.current));
+      dispatch(userAction.checkUserExistRequest(username.current));
     }
   }, [username.current]);
 
@@ -39,7 +44,7 @@ const sigunp = () => {
   const goBack = () => router.back();
 
   return (
-    <AuthLayout title="회원가입" icon={<ArrowLeft />} onClick={goBack}>
+    <Layout title="회원가입" icon={<ArrowLeft />} onClick={goBack}>
       {signUpDone && (
         <Container>
           <WelcomeBanner>
@@ -76,9 +81,16 @@ const sigunp = () => {
                 name="username"
                 ref={register({ required: '아이디를 입력해주세요.' })}
               />
-              <ErrorMessage>
-                {checkUsernameResult} {errors.username?.message}
-              </ErrorMessage>
+              <Message>
+                <Info>
+                  {checkUserExistResult === false && '사용가능한 아이디입니다.'}
+                </Info>
+                <Error>
+                  {checkUserExistResult === true &&
+                    '이미 사용중인 아이디입니다'}
+                  {errors.username?.message}
+                </Error>
+              </Message>
             </Row>
             <Row>
               <Label required>비밀번호</Label>
@@ -94,7 +106,9 @@ const sigunp = () => {
                   },
                 })}
               />
-              <ErrorMessage>{errors.password?.message}</ErrorMessage>
+              <Message>
+                <Error>{errors.password?.message}</Error>
+              </Message>
             </Row>
             <Row>
               <Label required>비밀번호 확인</Label>
@@ -111,7 +125,9 @@ const sigunp = () => {
                   },
                 })}
               />
-              <ErrorMessage>{errors.password_confirm?.message}</ErrorMessage>
+              <Message>
+                <Error>{errors.password_confirm?.message}</Error>
+              </Message>
             </Row>
             <Row>
               <Label>이메일</Label>
@@ -126,7 +142,9 @@ const sigunp = () => {
                   },
                 })}
               />
-              <ErrorMessage>{errors.email?.message}</ErrorMessage>
+              <Message>
+                <Error>{errors.email?.message}</Error>
+              </Message>
             </Row>
             <Outro>
               <Button primary big full type="submit">
@@ -136,7 +154,7 @@ const sigunp = () => {
           </form>
         </>
       )}
-    </AuthLayout>
+    </Layout>
   );
 };
 

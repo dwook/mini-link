@@ -7,8 +7,9 @@ import { userReducer } from '../feature/User/slice';
 import { linkReducer } from '../feature/Link/slice';
 import { homeReducer } from '../feature/Home/slice';
 import {
+  watchGetMyInfo,
   watchSignUp,
-  watchCheckUsername,
+  watchCheckUserExist,
   watchLogIn,
   watchLogOut,
 } from '../feature/User/saga';
@@ -42,8 +43,9 @@ axios.defaults.withCredentials = true;
 
 export function* rootSaga() {
   yield all([
+    watchGetMyInfo(),
     watchSignUp(),
-    watchCheckUsername(),
+    watchCheckUserExist(),
     watchLogIn(),
     watchLogOut(),
     watchGetLink(),
