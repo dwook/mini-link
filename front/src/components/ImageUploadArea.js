@@ -59,7 +59,6 @@ const ImageUploadArea = forwardRef(({ name, exImageURL }, ref) => {
   const [imageURL, setImageURL] = useState(exImageURL);
 
   const onClickImageUpload = useCallback(() => {
-    console.log(ref);
     imageInput.current.click();
   }, [imageInput.current]);
   const onClickImageDelete = useCallback(() => {
