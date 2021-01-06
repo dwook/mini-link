@@ -8,7 +8,7 @@ import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import SwitchInput from '../../src/components/Switch';
 import Button from '../../src/components/Button';
-import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
+import { Row, Input, Label, Message, Error } from '../../src/components/Input';
 import { Cross } from '../../src/icons';
 
 const Outro = styled.div`
@@ -68,7 +68,9 @@ const createLinkPage = () => {
               required: '링크를 나타낼 수 있는 이름을 입력해주세요.',
             })}
           />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.name?.message}</Error>
+          </Message>
         </Row>
         <Row>
           <Label>링크 주소</Label>
@@ -79,7 +81,9 @@ const createLinkPage = () => {
               required: '연결하고 싶은 링크 주소를 입력해주세요.',
             })}
           />
-          <ErrorMessage>{errors.url?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.url?.message}</Error>
+          </Message>
         </Row>
         <Row>
           <Label>링크 공개여부</Label>
@@ -87,7 +91,9 @@ const createLinkPage = () => {
             <span>{watchPublic === true ? '공개' : '비공개'}</span>
             <SwitchInput name="public" ref={register} />
           </SwitchContainer>
-          <ErrorMessage>{errors.public?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.public?.message}</Error>
+          </Message>
         </Row>
         <Outro>
           <Button primary big type="submit">

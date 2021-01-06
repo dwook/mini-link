@@ -44,11 +44,18 @@ const Label = styled.label`
   }}
 `;
 
-const ErrorMessage = styled.div`
+const Message = styled.div`
   height: 14px;
   margin: 10px;
   font-size: 12px;
+`;
+
+const Error = styled.span`
   color: ${(props) => props.theme.color.primary};
 `;
 
-export { Row, Input, Label, ErrorMessage };
+const Info = styled.span`
+  color: ${(props) => props.theme.color.green};
+`;
+
+export { Row, Input, Label, Message, Error, Info };

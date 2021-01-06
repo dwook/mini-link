@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { userAction } from '../../feature/User/slice';
 import Layout from '../../src/components/Layout';
 import Button from '../../src/components/Button';
-import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
+import { Row, Input, Label, Message, Error } from '../../src/components/Input';
 import { ArrowLeft } from '../../src/icons';
 
 const login = () => {
@@ -35,7 +35,9 @@ const login = () => {
             name="username"
             ref={register({ required: '아이디를 입력해주세요.' })}
           />
-          <ErrorMessage>{errors.username?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.username?.message}</Error>
+          </Message>
         </Row>
         <Row>
           <Label>비밀번호</Label>
@@ -45,7 +47,9 @@ const login = () => {
             autoComplete="off"
             ref={register({ required: '비밀번호를 입력해주세요.' })}
           />
-          <ErrorMessage>{errors.password?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.password?.message}</Error>
+          </Message>
         </Row>
         <Outro>
           <Button primary big type="submit">

@@ -11,7 +11,7 @@ import { backURL } from '../../config';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import Button from '../../src/components/Button';
-import { Row, Input, Label, ErrorMessage } from '../../src/components/Input';
+import { Row, Input, Label, Message, Error } from '../../src/components/Input';
 import { Cross } from '../../src/icons';
 
 const Outro = styled.div`
@@ -38,6 +38,7 @@ const editHomePage = () => {
   useEffect(() => {
     if (editHomeDone) {
       router.push('/admin');
+      dispatch(homeAction.editHomeReset());
     }
   }, [editHomeDone]);
 
@@ -71,7 +72,9 @@ const editHomePage = () => {
             placeholder="소개글을 입력해주세요."
             ref={register}
           />
-          <ErrorMessage>{errors.introduction?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.introduction?.message}</Error>
+          </Message>
         </Row>
         <Row>
           <Label>웹사이트</Label>
@@ -81,7 +84,9 @@ const editHomePage = () => {
             placeholder="웹사이트 전체 주소를 입력해주세요."
             ref={register}
           />
-          <ErrorMessage>{errors.website?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.website?.message}</Error>
+          </Message>
         </Row>
         <Row>
           <Label>인스타그램</Label>
@@ -91,7 +96,9 @@ const editHomePage = () => {
             placeholder="@를 제외한 아이디만 입력해주세요."
             ref={register}
           />
-          <ErrorMessage>{errors.instagram?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.instagram?.message}</Error>
+          </Message>
         </Row>
         <Row>
           <Label>유투브</Label>
@@ -101,7 +108,9 @@ const editHomePage = () => {
             placeholder="채널 전체 주소를 입력해주세요."
             ref={register}
           />
-          <ErrorMessage>{errors.youtube?.message}</ErrorMessage>
+          <Message>
+            <Error>{errors.youtube?.message}</Error>
+          </Message>
         </Row>
         <Outro>
           <Button primary big type="submit">
