@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { END } from 'redux-saga';
+import axios from 'axios';
+import wrapper from '../store';
 import { userAction } from '../feature/User/slice';
 import { linkAction } from '../feature/Link/slice';
 import { homeAction } from '../feature/Home/slice';
@@ -48,29 +51,38 @@ const Admin = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { userLinks, deleteLinkDone } = useSelector((state) => state.link);
+  const { userInfo, getMyInfoDone } = useSelector((state) => state.user);
   const { selectedHome } = useSelector((state) => state.home);
-  const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(linkAction.getLinksRequest());
-  }, [deleteLinkDone]);
-  useEffect(() => {
-    dispatch(homeAction.getHomeRequest());
+    dispatch(userAction.getMyInfoRequest());
   }, []);
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(homeAction.getHomeRequest(userInfo?.username));
+    }
+  }, [getMyInfoDone]);
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(linkAction.getLinksRequest(userInfo?.username));
+    }
+  }, [getMyInfoDone, deleteLinkDone]);
 
   const onDeleteClick = (id) => () => {
     dispatch(linkAction.deleteLinkRequest(id));
   };
 
   const onLogoutClick = () => {
-    dispatch(userAction.logOutRequest());
     router.push('/');
+    dispatch(userAction.logOutRequest());
   };
 
   return (
     <>
       <Header mainColor={selectedHome?.mainColor}>
-        <CoverImage imageURL={`'${backURL}/${selectedHome?.coverImage}'`}>
+        <CoverImage
+          imageURL={selectedHome && `'${backURL}/${selectedHome?.coverImage}'`}
+        >
           <CoverButtonList>
             <CoverButton onClick={onLogoutClick}>로그아웃</CoverButton>
             <CoverButton href={`/home/${userInfo?.id}`}>
@@ -121,5 +133,25 @@ const Admin = () => {
     </>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+      context.store.dispatch(userAction.getMyInfoRequest());
+      context.store.dispatch(END);
+      await context.store.sagaTask.toPromise();
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/user/login',
+        },
+      };
+    }
+  }
+);
 
 export default Admin;
