@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Footer from './Footer';
 
 const Container = styled.div`
   max-width: 600px;
@@ -33,15 +34,18 @@ const Title = styled.div`
 `;
 
 const Layout = ({ icon, title, onClick, children }) => (
-  <Container>
-    <Top>
-      <button type="button" onClick={onClick}>
-        {icon}
-      </button>
-      <Title>{title}</Title>
-    </Top>
-    {children}
-  </Container>
+  <>
+    <Container>
+      <Top>
+        <button type="button" onClick={onClick}>
+          {icon}
+        </button>
+        <Title>{title}</Title>
+      </Top>
+      {children}
+    </Container>
+    <Footer />
+  </>
 );
 
 Layout.propTypes = {
