@@ -18,15 +18,15 @@ exports.getLink = async (req, res, next) => {
 exports.getLinks = async (req, res, next) => {
   try {
     console.log('유저네임', req.query.username);
-    console.log('유저쿠키', req.user?.id);
+    console.log('유저쿠키', req.user && req.user.id);
     const user = await User.findOne({
       where: {
         username: req.query.username,
       },
     });
-    console.log('유저아이디', req.user?.id, user.id);
+    console.log('유저아이디', req.user && req.user.id, user.id);
     let links;
-    if (req.user && req.user?.id === user.id && req.query.public !== '1') {
+    if (req.user && req.user.id === user.id && req.query.public !== '1') {
       // 어드민용
       links = await Link.findAll({
         where: {
