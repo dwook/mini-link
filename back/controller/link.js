@@ -1,4 +1,5 @@
-const { Link, User } = require('../models');
+const sequelize = require('sequelize');
+const { Link, User, Visit } = require('../models');
 
 exports.getLink = async (req, res, next) => {
   try {
@@ -32,6 +33,18 @@ exports.getLinks = async (req, res, next) => {
         where: {
           UserId: user.id,
         },
+        attributes: {
+          include: [
+            [sequelize.fn('COUNT', sequelize.col('visits.id')), 'VisitCount'],
+          ],
+        },
+        include: [
+          {
+            model: Visit,
+            attributes: [],
+          },
+        ],
+        group: ['Link.id']
       });
     } else {
       // 공개용

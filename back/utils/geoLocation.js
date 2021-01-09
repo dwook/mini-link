@@ -2,8 +2,8 @@ require('dotenv').config();
 const axios = require('axios');
 const CryptoJS = require('crypto-js');
 
-const ACCESS_KEY = process.env.access_key;
-const SECRET_KEY = process.env.secret_key;
+const access_key = process.env.ACCESS_KEY;
+const secret_key = process.env.SECRET_KEY;
 
 const requestMethod = 'GET';
 const hostName = 'https://geolocation.apigw.ntruss.com';
