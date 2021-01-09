@@ -16,7 +16,7 @@ const StyledBadge = styled.div`
     }
     return `
       background: ${props.theme.color.gray};
-      color: #000;
+      color: ${props.theme.color.darkgray};
     `;
   }}
 `;

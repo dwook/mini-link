@@ -18,8 +18,21 @@ const StyledMiniLink = styled.div`
     color: ${(props) => props.theme.color.darkgray};
     font-size: 16px;
     padding: 0 20px;
-    .title {
-      margin: 6px 0;
+  }
+  .title {
+    margin: 5px 0 10px;
+    span {
+      margin: 0 10px;
+    }
+  }
+  .detail {
+    display: flex;
+    align-items: center;
+  }
+  .click {
+    font-size: 14px;
+    .count {
+      margin: 0 5px;
     }
   }
   .edit {
