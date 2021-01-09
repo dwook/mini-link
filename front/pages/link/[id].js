@@ -15,25 +15,6 @@ import Button from '../../src/components/Button';
 import { Row, Input, Label, Message, Error } from '../../src/components/Input';
 import { Cross } from '../../src/icons';
 
-const Outro = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  padding: 0 20px;
-`;
-
-const SwitchContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  span {
-    font-size: 18px;
-    font-weight: bold;
-    color: ${(props) => props.theme.color.primary};
-  }
-`;
-
 const editLinkPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -121,6 +102,25 @@ const editLinkPage = () => {
     </Layout>
   );
 };
+
+const Outro = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 100px;
+  padding: 0 20px;
+`;
+
+const SwitchContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    font-size: 18px;
+    font-weight: bold;
+    color: ${(props) => props.theme.color.primary};
+  }
+`;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
