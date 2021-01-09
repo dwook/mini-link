@@ -64,7 +64,7 @@ const login = () => {
 const Outro = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin: 20px 0 100px;
   padding: 0 20px;
 `;
 
