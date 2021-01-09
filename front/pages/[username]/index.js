@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import styled from 'styled-components';
@@ -13,22 +13,7 @@ import {
 import { Home, Instagram, Youtube, Share } from '../../src/icons';
 import { backURL } from '../../config';
 
-const Header = styled.div`
-  background-color: ${(props) => props.mainColor || props.theme.color.yellow};
-  height: 240px;
-`;
-
-const Content = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  @media screen and ${(props) => props.theme.media.mobile} {
-    padding: 0 20px;
-  }
-`;
-
-const MiniHome = ({ miniHome, miniLinks, username }) => {
-  const [ip, setIp] = useState(null);
-
+const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
   const onClickHandler = useCallback(
     (linkId) => () => {
       axios.post(`${backURL}/visit?linkId=${linkId}&ip=${ip}`);
@@ -36,16 +21,8 @@ const MiniHome = ({ miniHome, miniLinks, username }) => {
     []
   );
 
-  useEffect(async () => {
-    const data = await fetch('https://api.ipify.org?format=json', {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((res) => res.ip);
-    setIp(data);
-    if (data) {
-      axios.post(`${backURL}/visit?homeId=${miniHome.id}&ip=${ip}`);
-    }
+  useEffect(() => {
+    axios.post(`${backURL}/visit?homeId=${miniHome.id}&ip=${ip}`);
   }, []);
 
   return (
@@ -83,11 +60,9 @@ const MiniHome = ({ miniHome, miniLinks, username }) => {
               target="_blank"
               rel="noopener noreferrer"
               key={link.id}
+              onClick={onClickHandler(link.id)}
             >
-              <MiniLink
-                imageURL={`'${backURL}/${link.image}'`}
-                onClick={onClickHandler(link.id)}
-              >
+              <MiniLink imageURL={`'${backURL}/${link.image}'`}>
                 <div className="content">
                   <p className="title">{link.name}</p>
                 </div>
@@ -103,10 +78,12 @@ MiniHome.propTypes = {
   miniHome: PropTypes.object.isRequired,
   username: PropTypes.string.isRequired,
   miniLinks: PropTypes.array,
+  ip: PropTypes.string,
 };
 
 MiniHome.defaultProps = {
   miniLinks: [],
+  ip: '',
 };
 
 const fetcher = (url) => axios.get(url).then((result) => result.data);
@@ -115,6 +92,12 @@ export async function getServerSideProps(context) {
   const user = await axios.post('/user/check', {
     username: context.params.username,
   });
+
+  const ipData = await fetch('https://api.ipify.org?format=json', {
+    method: 'GET',
+  })
+    .then((res) => res.json())
+    .then((res) => res.ip);
 
   if (user.data) {
     const GET_HOME_DATA_URL = `${backURL}/home/${context.params.username}`;
@@ -127,6 +110,7 @@ export async function getServerSideProps(context) {
         miniHome: homeData,
         miniLinks: linkData,
         username: context.params.username,
+        ip: ipData,
       },
     };
   }
@@ -137,5 +121,18 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+const Header = styled.div`
+  background-color: ${(props) => props.mainColor || props.theme.color.yellow};
+  height: 240px;
+`;
+
+const Content = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  @media screen and ${(props) => props.theme.media.mobile} {
+    padding: 0 20px;
+  }
+`;
 
 export default MiniHome;
