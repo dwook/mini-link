@@ -35,7 +35,7 @@ db.sequelize
     app.use(hpp());
     app.use(helmet({ contentSecurityPolicy: false }));
     app.use(cors({
-      origin: 'http://mini-link.site',
+      origin: 'http://www.mini-link.site',
       credentials: true,
     }));
   } else {
