@@ -17,7 +17,7 @@ const linkRouter = require('./routes/link');
 const homeRouter = require('./routes/home');
 const visitRouter = require('./routes/visit');
 
-const PORT = 80;
+const PORT = 5000;
 dotenv.config();
 passportConfig();
 const app = express();
