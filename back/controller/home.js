@@ -1,14 +1,6 @@
 const { User, Home } = require('../models');
-const ColorThief = require('colorthief');
-
-const rgbToHex = (r, g, b) =>
-  '#' +
-  [r, g, b]
-    .map((x) => {
-      const hex = x.toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
-    })
-    .join('');
+const axios = require('axios');
+const Vibrant = require('node-vibrant');
 
 exports.getHome = async (req, res, next) => {
   try {
@@ -40,10 +32,13 @@ exports.editHome = async (req, res, next) => {
       website: req.body.website,
     };
     if (req.file) {
-      const color = await ColorThief.getColor(req.file.path);
-      const mainColor = rgbToHex(color[0], color[1], color[2]);
+      const bufferImage = (
+        await axios({ url: req.file.location, responseType: 'arraybuffer' })
+      ).data;
+      const palette = await Vibrant.from(bufferImage).getPalette();
+      const mainColor = palette.LightVibrant.getHex();
       editedHome.mainColor = mainColor;
-      editedHome.coverImage = req.file.path;
+      editedHome.coverImage = req.file.location;
     }
     await Home.update(editedHome, {
       where: {

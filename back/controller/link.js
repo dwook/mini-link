@@ -71,7 +71,7 @@ exports.createLink = async (req, res, next) => {
       UserId: req.user.id,
     };
     if (req.file) {
-      createdLink.image = req.file.path;
+      createdLink.image = req.file.location;
     }
     const link = await Link.create(createdLink);
     res.status(200).json(link);
@@ -89,7 +89,7 @@ exports.editLink = async (req, res, next) => {
       public: req.body.public,
     };
     if (req.file) {
-      editedLink.image = req.file.path;
+      editedLink.image = req.file.location;
     }
     await Link.update(editedLink, {
       where: {
