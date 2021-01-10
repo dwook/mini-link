@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon app",
-    "start": "cross-env NODE_ENV=production node start app.js"
+    "start": "cross-env NODE_ENV=production pm2 start app.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "express-useragent": "^1.0.15",
+    "helmet": "^4.3.1",
+    "hpp": "^0.2.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
@@ -28,6 +30,7 @@
     "node-vibrant": "^3.2.1-alpha.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "pm2": "^4.5.1",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0"
   },

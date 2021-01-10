@@ -7,6 +7,8 @@ const passport = require('passport');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const path = require('path');
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const db = require('./models');
 const passportConfig = require('./passport');
@@ -15,7 +17,7 @@ const linkRouter = require('./routes/link');
 const homeRouter = require('./routes/home');
 const visitRouter = require('./routes/visit');
 
-const PORT = 5000;
+const PORT = 80;
 dotenv.config();
 passportConfig();
 const app = express();
@@ -27,13 +29,22 @@ db.sequelize
   })
   .catch(console.error);
 
-app.use(morgan('dev'));
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+  if (process.env.NODE_ENV === 'production') {
+    app.enable('trust proxy');
+    app.use(morgan('combined'));
+    app.use(hpp());
+    app.use(helmet({ contentSecurityPolicy: false }));
+    app.use(cors({
+      origin: 'http://mini-link.site',
+      credentials: true,
+    }));
+  } else {
+    app.use(morgan('dev'));
+    app.use(cors({
+      origin: true,
+      credentials: true,
+    }));
+  }
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
@@ -46,6 +57,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      domain: process.env.NODE_ENV === 'production' && '.mini-link.site'
     },
   })
 );
