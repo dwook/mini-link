@@ -34,12 +34,12 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
         <meta property="og:url" content={`${backURL}/${username}`} />
         <meta
           property="og:image"
-          content={`${backURL}/${miniHome.coverImage}`}
+          content={miniHome.coverImage}
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Header mainColor={miniHome.mainColor}>
-        <CoverImage imageURL={`${backURL}/${miniHome.coverImage}`}>
+        <CoverImage imageURL={miniHome.coverImage}>
           <CoverButtonList>
             <CoverButton outsite icon={<Home />} href={miniHome.website} />
             <CoverButton
@@ -62,7 +62,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
               key={link.id}
               onClick={onClickHandler(link.id)}
             >
-              <MiniLink imageURL={`'${backURL}/${link.image}'`}>
+              <MiniLink imageURL={link.image}>
                 <div className="content">
                   <p className="title">{link.name}</p>
                 </div>

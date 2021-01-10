@@ -61,7 +61,7 @@ const Admin = () => {
     <>
       <Header mainColor={selectedHome?.mainColor}>
         <CoverImage
-          imageURL={selectedHome && `'${backURL}/${selectedHome?.coverImage}'`}
+          imageURL={selectedHome?.coverImage}
         >
           <CoverButtonList>
             <CoverButton onClick={onLogoutClick}>로그아웃</CoverButton>
@@ -98,7 +98,7 @@ const Admin = () => {
           <Title>링크 관리하기</Title>
           {userLinks &&
             userLinks.map((link) => (
-              <MiniLink key={link.id} imageURL={`'${backURL}/${link.image}'`}>
+              <MiniLink key={link.id} imageURL={link.image}>
                 <div className="content">
                   <div className="title">
                     {link.public ? (

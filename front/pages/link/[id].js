@@ -7,7 +7,6 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import wrapper from '../../store';
 import { linkAction } from '../../feature/Link/slice';
-import { backURL } from '../../config';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import SwitchInput from '../../src/components/Switch';
@@ -55,7 +54,7 @@ const editLinkPage = () => {
         <ImageUploadArea
           name="image"
           ref={register}
-          exImageURL={`'${backURL}/${selectedLink?.image}'`}
+          exImageURL={selectedLink?.image}
         />
         <Row>
           <Label>링크 이름</Label>

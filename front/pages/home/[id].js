@@ -7,7 +7,6 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import wrapper from '../../store';
 import { homeAction } from '../../feature/Home/slice';
-import { backURL } from '../../config';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
 import Button from '../../src/components/Button';
@@ -55,7 +54,7 @@ const editHomePage = () => {
         <ImageUploadArea
           name="image"
           ref={register}
-          exImageURL={`'${backURL}/${selectedHome?.coverImage}'`}
+          exImageURL={selectedHome?.coverImage}
         />
         <Row>
           <Label>소개글</Label>
