@@ -29,22 +29,26 @@ db.sequelize
   })
   .catch(console.error);
 
-  if (process.env.NODE_ENV === 'production') {
-    app.enable('trust proxy');
-    app.use(morgan('combined'));
-    app.use(hpp());
-    app.use(helmet({ contentSecurityPolicy: false }));
-    app.use(cors({
-      origin: 'https://www.mini-link.site',
+if (process.env.NODE_ENV === 'production') {
+  app.enable('trust proxy');
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(
+    cors({
+      origin: 'https://mini-link.site/',
       credentials: true,
-    }));
-  } else {
-    app.use(morgan('dev'));
-    app.use(cors({
+    })
+  );
+} else {
+  app.use(morgan('dev'));
+  app.use(
+    cors({
       origin: true,
       credentials: true,
-    }));
-  }
+    })
+  );
+}
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
@@ -55,10 +59,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    proxy: process.env.NODE_ENV === 'production',
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      domain: process.env.NODE_ENV === 'production' && '.mini-link.site'
+      domain: process.env.NODE_ENV === 'production' && '.mini-link.site',
     },
   })
 );
