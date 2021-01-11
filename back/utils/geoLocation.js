@@ -9,9 +9,8 @@ const requestMethod = 'GET';
 const hostName = 'https://geolocation.apigw.ntruss.com';
 const requestUrl = '/geolocation/v2/geoLocation';
 
-const timeStamp = Math.floor(+new Date()).toString();
-
 exports.geoLocation = async (ip) => {
+  const timeStamp = Math.floor(+new Date()).toString();
   const sortedSet = {};
   sortedSet['ip'] = ip;
   sortedSet['ext'] = 't';
@@ -20,10 +19,32 @@ exports.geoLocation = async (ip) => {
   let queryString = Object.keys(sortedSet).reduce((prev, curr) => {
     return prev + curr + '=' + sortedSet[curr] + '&';
   }, '');
-
   queryString = queryString.substr(0, queryString.length - 1);
 
   const baseString = requestUrl + '?' + queryString;
+
+  const makeSignature = (
+    secretKey,
+    method,
+    baseString,
+    timestamp,
+    accessKey
+  ) => {
+    const space = ' ';
+    const newLine = '\n';
+    let hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
+
+    hmac.update(method);
+    hmac.update(space);
+    hmac.update(baseString);
+    hmac.update(newLine);
+    hmac.update(timestamp);
+    hmac.update(newLine);
+    hmac.update(accessKey);
+    const hash = hmac.finalize();
+
+    return hash.toString(CryptoJS.enc.Base64);
+  };
   const signature = makeSignature(
     secret_key,
     requestMethod,
@@ -48,20 +69,3 @@ exports.geoLocation = async (ip) => {
     console.log(error.response.data);
   }
 };
-
-function makeSignature(secretKey, method, baseString, timestamp, accessKey) {
-  const space = ' ';
-  const newLine = '\n';
-  let hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
-
-  hmac.update(method);
-  hmac.update(space);
-  hmac.update(baseString);
-  hmac.update(newLine);
-  hmac.update(timestamp);
-  hmac.update(newLine);
-  hmac.update(accessKey);
-  const hash = hmac.finalize();
-
-  return hash.toString(CryptoJS.enc.Base64);
-}
