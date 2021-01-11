@@ -47,22 +47,24 @@ const Admin = () => {
       dispatch(linkAction.getLinksRequest(userInfo?.username));
     }
   }, [getMyInfoDone, deleteLinkDone]);
+  useEffect(() => {
+    if (!userInfo) {
+      router.push('/');
+    }
+  }, [userInfo]);
 
   const onDeleteClick = (id) => () => {
     dispatch(linkAction.deleteLinkRequest(id));
   };
 
   const onLogoutClick = () => {
-    router.push('/');
     dispatch(userAction.logOutRequest());
   };
 
   return (
     <>
       <Header mainColor={selectedHome?.mainColor}>
-        <CoverImage
-          imageURL={selectedHome?.coverImage}
-        >
+        <CoverImage imageURL={selectedHome?.coverImage}>
           <CoverButtonList>
             <CoverButton onClick={onLogoutClick}>로그아웃</CoverButton>
             <CoverButton href={`/home/${userInfo?.id}`}>
