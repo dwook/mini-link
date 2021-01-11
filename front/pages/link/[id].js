@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import wrapper from '../../store';
+import { userAction } from '../../feature/User/slice';
 import { linkAction } from '../../feature/Link/slice';
 import Layout from '../../src/components/Layout';
 import ImageUploadArea from '../../src/components/ImageUploadArea';
@@ -128,6 +129,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
+    context.store.dispatch(userAction.getMyInfoRequest());
     context.store.dispatch(linkAction.getLinkRequest(context.params.id));
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
