@@ -23,6 +23,7 @@ const StyledButton = styled.button`
     `;
     }
     return `
+      background: #fff;
       box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
       &:hover {
         box-shadow: 0 6px 20px rgba(93,93,93,0.23);

@@ -29,7 +29,7 @@ const Header = () => {
     <HeaderContainer>
       <Link href="/">
         <a>
-          <Logo width={200} />
+          <Logo width={140} />
         </a>
       </Link>
       <div>
@@ -48,11 +48,6 @@ const Header = () => {
             <Link href="/user/login">
               <a>
                 <Button>로그인</Button>
-              </a>
-            </Link>
-            <Link href="/user/signup">
-              <a>
-                <Button primary>무료회원가입</Button>
               </a>
             </Link>
           </>
