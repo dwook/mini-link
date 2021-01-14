@@ -60,6 +60,10 @@ const createLinkPage = () => {
             inputmode="url"
             ref={register({
               required: '연결하고 싶은 링크 주소를 입력해주세요.',
+              pattern: {
+                value: /^(http|https):\/\//,
+                message: 'http:// 또는 https://로 시작하는 URL을 입력해주세요.',
+              },
             })}
           />
           <Message>

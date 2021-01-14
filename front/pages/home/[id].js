@@ -75,7 +75,12 @@ const editHomePage = () => {
             name="website"
             inputmode="url"
             placeholder="웹사이트 전체 주소를 입력해주세요."
-            ref={register}
+            ref={register({
+              pattern: {
+                value: /^(http|https):\/\//,
+                message: 'http:// 또는 https://로 시작하는 URL을 입력해주세요.',
+              },
+            })}
           />
           <Message>
             <Error>{errors.website?.message}</Error>
@@ -87,7 +92,12 @@ const editHomePage = () => {
             name="instagram"
             inputmode="url"
             placeholder="@를 제외한 아이디만 입력해주세요."
-            ref={register}
+            ref={register({
+              pattern: {
+                value: /^[^@ | http://www. | https://www.].*/,
+                message: '@없이 인스타그램 아이디만 입력해주세요.',
+              },
+            })}
           />
           <Message>
             <Error>{errors.instagram?.message}</Error>
@@ -99,7 +109,12 @@ const editHomePage = () => {
             name="youtube"
             inputmode="url"
             placeholder="채널 전체 주소를 입력해주세요."
-            ref={register}
+            ref={register({
+              pattern: {
+                value: /^(http|https):\/\//,
+                message: 'http:// 또는 https://로 시작하는 URL을 입력해주세요.',
+              },
+            })}
           />
           <Message>
             <Error>{errors.youtube?.message}</Error>

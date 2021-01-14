@@ -45,7 +45,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
             <CoverButton
               outsite
               icon={<Instagram />}
-              href={miniHome.instagram}
+              href={`https://www.instagram.com/${miniHome.instagram}`}
             />
             <CoverButton outsite icon={<Youtube />} href={miniHome.youtube} />
             <CoverButton icon={<Share />} />
