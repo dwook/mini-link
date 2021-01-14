@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Header from '../src/components/Header';
@@ -7,30 +7,37 @@ import Button from '../src/components/Button';
 import Gooey from '../src/components/Gooey';
 import { symbol } from 'prop-types';
 
-const Home = () => (
-  <div>
-    <Header />
-    <Jumbotron />
-    {/* <Gooey content="hello" /> */}
-    <Container>
-      <Section>
-        <InputContainer>
-          <div>
-            <span className="domain">https://mini-link.site/</span>
-            <input></input>
-          </div>
-          <Link href="/user/signup">
-            <a>
-              <Button primary full>
-                시작하기
-              </Button>
-            </a>
-          </Link>
-        </InputContainer>
-      </Section>
-    </Container>
-  </div>
-);
+const Home = () => {
+  const [id, setId] = useState();
+  const onInputChange = (e) => {
+    setId(e.target.value);
+  };
+
+  return (
+    <div>
+      <Header />
+      <Jumbotron />
+      {/* <Gooey content="hello" /> */}
+      <Container>
+        <Section>
+          <InputContainer>
+            <div>
+              <span className="domain">https://mini-link.site/</span>
+              <input onChange={onInputChange} value={id} />
+            </div>
+            <Link href={`/user/signup?id=${id}`}>
+              <a>
+                <Button primary full>
+                  시작하기
+                </Button>
+              </a>
+            </Link>
+          </InputContainer>
+        </Section>
+      </Container>
+    </div>
+  );
+};
 
 const Container = styled.div`
   text-align: center;

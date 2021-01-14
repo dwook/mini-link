@@ -19,10 +19,11 @@ import { ArrowLeft } from '../../src/icons';
 
 const sigunp = () => {
   const router = useRouter();
+  const { id } = router.query;
   const dispatch = useDispatch();
   const signUpDone = useSelector((state) => state.user.signUpDone);
   const { checkUserExistResult } = useSelector((state) => state.user);
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, setValue, watch, errors } = useForm();
   const username = useRef();
   username.current = watch('username');
   const password = useRef();
@@ -30,6 +31,7 @@ const sigunp = () => {
 
   useEffect(() => {
     dispatch(userAction.signUpReset());
+    setValue('username', id);
   }, []);
   useEffect(() => {
     if (username.current) {
@@ -65,10 +67,15 @@ const sigunp = () => {
       {!signUpDone && (
         <>
           <Intro>
-            이미 가입하셨나요?
-            <Link href="/user/login">
-              <a>로그인 하기</a>
-            </Link>
+            <div className="container">
+              <div className="emoji">💁‍♂️</div>
+              <div className="content">
+                이미 가입하셨나요?
+                <Link href="/user/login">
+                  <a>로그인 하기</a>
+                </Link>
+              </div>
+            </div>
           </Intro>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row>
@@ -77,19 +84,26 @@ const sigunp = () => {
                 <span>🧚‍♀️</span>
                 아이디는 미니링크 주소로 사용됩니다. 변경할 수 없어요!
               </Guide>
-              <Input
-                name="username"
-                ref={register({ required: '아이디를 입력해주세요.' })}
-              />
+              <URL>
+                <Input
+                  name="username"
+                  ref={register({ required: '아이디를 입력해주세요.' })}
+                />
+              </URL>
               <Message>
-                <Info>
-                  {checkUserExistResult === false && '사용가능한 아이디입니다.'}
-                </Info>
-                <Error>
-                  {checkUserExistResult === true &&
-                    '이미 사용중인 아이디입니다'}
-                  {errors.username?.message}
-                </Error>
+                {username.current && (
+                  <>
+                    <Info>
+                      {checkUserExistResult === false
+                        && '사용가능한 아이디입니다.'}
+                    </Info>
+                    <Error>
+                      {checkUserExistResult === true
+                        && '이미 사용중인 아이디입니다'}
+                      {errors.username?.message}
+                    </Error>
+                  </>
+                )}
               </Message>
             </Row>
             <Row>
@@ -119,9 +133,8 @@ const sigunp = () => {
                 ref={register({
                   required: '비밀번호를 다시 한번 입력해주세요.',
                   validate: {
-                    confirm: (value) =>
-                      value === password.current ||
-                      '비밀번호를 다르게 입력하셨습니다.',
+                    confirm: (value) => value === password.current
+                      || '비밀번호를 다르게 입력하셨습니다.',
                   },
                 })}
               />
@@ -161,10 +174,24 @@ const sigunp = () => {
 const Intro = styled.div`
   text-align: left;
   width: 100%;
-  padding: 20px 20px 40px;
+  padding: 20px;
+  .container {
+    display: flex;
+  }
   a {
     color: ${(props) => props.theme.color.primary};
-    margin: 0 10px;
+    margin-top: 6px;
+    font-weight: bold;
+  }
+  .emoji {
+    font-size: 60px;
+    text-align: left;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 10px;
   }
 `;
 
@@ -179,10 +206,13 @@ const Guide = styled.span`
   padding: 6px 10px 4px;
   display: inline-flex;
   position: absolute;
+  max-width: 200px;
   left: 100px;
   font-size: 12px;
-  background-color: ${(props) => props.theme.color.gray};
+  color: #868e96;
+  background-color: #f1f3f5;
   border-radius: 2px;
+  z-index: 100;
   animation: updown 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   animation-iteration-count: infinite;
   span {
@@ -210,12 +240,29 @@ const WelcomeBanner = styled.div`
   padding: 20px;
   margin: 20px;
   .emoji {
-    font-size: 60px;
+    font-size: 36px;
     text-align: center;
     margin-bottom: 20px;
   }
   .text {
     text-align: center;
+  }
+`;
+
+const URL = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  :before {
+    position: absolute;
+    left: 10px;
+    content: 'https://mini-link.site/';
+    color: #bababa;
+    font-size: 16px;
+  }
+  input {
+    flex: 1 1 auto;
+    padding: 8px 10px 8px 165px;
   }
 `;
 
