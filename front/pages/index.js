@@ -5,7 +5,6 @@ import Header from '../src/components/Header';
 import Jumbotron from '../src/components/Jumbotron';
 import Button from '../src/components/Button';
 import Gooey from '../src/components/Gooey';
-import { symbol } from 'prop-types';
 
 const Home = () => {
   const [id, setId] = useState();
