@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -28,6 +29,17 @@ const login = () => {
 
   return (
     <Layout title="로그인" icon={<ArrowLeft />} onClick={goBack}>
+      <Intro>
+        <div className="container">
+          <div className="emoji">🙋‍♀️</div>
+          <div className="content">
+            아직 가입하지 않으셨나요?
+            <Link href="/user/login">
+              <a>무료 회원가입</a>
+            </Link>
+          </div>
+        </div>
+      </Intro>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Label>아이디</Label>
@@ -60,6 +72,30 @@ const login = () => {
     </Layout>
   );
 };
+
+const Intro = styled.div`
+  text-align: left;
+  width: 100%;
+  padding: 20px;
+  .container {
+    display: flex;
+  }
+  a {
+    color: ${(props) => props.theme.color.primary};
+    margin-top: 6px;
+    font-weight: bold;
+  }
+  .emoji {
+    font-size: 60px;
+    text-align: left;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 10px;
+  }
+`;
 
 const Outro = styled.div`
   display: flex;
