@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  body, textarea {
     font-family: -apple-system,BlinkMacSystemFont,Apple SD Gothic Neo,Inter,Spoqa Han Sans,Segoe UI,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
     font-size: 14px;
     color: #2c3848;

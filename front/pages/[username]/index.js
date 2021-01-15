@@ -1,29 +1,65 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import styled from 'styled-components';
 import axios from 'axios';
 import MiniLink from '../../src/components/MiniLink';
-
+import Introduction from '../../src/components/Introduction';
 import {
   CoverImage,
   CoverButtonList,
   CoverButton,
 } from '../../src/components/CoverImage';
+import Modal from '../../src/components/Modal';
+import Button from '../../src/components/Button';
 import { Home, Instagram, Youtube, Share } from '../../src/icons';
 import { backURL } from '../../config';
 
 const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
-  const onClickHandler = useCallback(
+  const [modalOpen, setModalOpen] = useState(false);
+  const [copySuccess, setCopySuccess] = useState('');
+  const URLRef = useRef(null);
+
+  const onLinkClick = useCallback(
     (linkId) => () => {
       axios.post(`${backURL}/visit?linkId=${linkId}&ip=${ip}`);
     },
     []
   );
+  const onShareClick = useCallback(() => {
+    try {
+      if (navigator.share) {
+        navigator.share({
+          title: `${username} 미니링크`,
+          text: miniHome.introduction,
+          url: `${backURL}/${username}`,
+        });
+      } else {
+        setModalOpen(true);
+      }
+    } catch (e) {
+      console.log('공유 실패');
+    }
+  }, []);
+
+  const copyToClipboard = (e) => {
+    URLRef.current.select();
+    document.execCommand('copy');
+    setCopySuccess('주소가 복사되었습니다!');
+  };
 
   useEffect(() => {
     axios.post(`${backURL}/visit?homeId=${miniHome.id}&ip=${ip}`);
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCopySuccess('');
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [copySuccess]);
 
   return (
     <>
@@ -32,14 +68,14 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
         <meta property="og:title" content={`${username} 미니링크`} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${backURL}/${username}`} />
-        <meta
-          property="og:image"
-          content={miniHome.coverImage}
-        />
+        <meta property="og:description" content={miniHome.introduction} />
+        <meta property="og:image" content={miniHome.coverImage} />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Header mainColor={miniHome.mainColor}>
         <CoverImage imageURL={miniHome.coverImage}>
+          <Introduction primary content={username} />
+          <Introduction content={miniHome.introduction} />
           <CoverButtonList>
             <CoverButton outsite icon={<Home />} href={miniHome.website} />
             <CoverButton
@@ -48,9 +84,26 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
               href={`https://www.instagram.com/${miniHome.instagram}`}
             />
             <CoverButton outsite icon={<Youtube />} href={miniHome.youtube} />
-            <CoverButton icon={<Share />} />
+            <CoverButton icon={<Share />} onClick={onShareClick} />
           </CoverButtonList>
         </CoverImage>
+        {modalOpen && (
+          <Modal onClick={setModalOpen}>
+            <URLContainer>
+              <Message>{copySuccess}</Message>
+              <form>
+                <URLTextarea
+                  readOnly
+                  ref={URLRef}
+                  value={`${backURL}/${username}`}
+                />
+              </form>
+              <Button primary big full onClick={copyToClipboard}>
+                주소복사
+              </Button>
+            </URLContainer>
+          </Modal>
+        )}
       </Header>
       <Content>
         {miniLinks &&
@@ -60,7 +113,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
               target="_blank"
               rel="noopener noreferrer"
               key={link.id}
-              onClick={onClickHandler(link.id)}
+              onClick={onLinkClick(link.id)}
             >
               <MiniLink imageURL={link.image}>
                 <div className="content">
@@ -133,6 +186,35 @@ const Content = styled.div`
   @media screen and ${(props) => props.theme.media.mobile} {
     padding: 0 20px;
   }
+`;
+
+const URLContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  form {
+    width: 100%;
+  }
+`;
+
+const URLTextarea = styled.textarea`
+  width: 100%;
+  background-color: ${(props) => props.theme.color.gray};
+  text-align: center;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  resize: none;
+  line-height: 3;
+  font-size: 16px;
+  height: 3rem;
+  margin: 1rem 0 1rem;
+`;
+
+const Message = styled.div`
+  margin: 1rem 0;
+  height: 1rem;
 `;
 
 export default MiniHome;
