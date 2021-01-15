@@ -4,12 +4,7 @@ import styled from 'styled-components';
 
 const Gooey = ({ content }) => (
   <>
-    <svg
-      width="0"
-      height="0"
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-    >
+    <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs>
         <filter id="gooey">
           <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
@@ -36,7 +31,8 @@ Gooey.defaultProps = {
 };
 
 const StyledContainer = styled.div`
-  font-size: 3rem;
+  font-size: 1.2rem;
+  line-height: 2;
   display: inline;
   box-decoration-break: clone;
   background: #fff;

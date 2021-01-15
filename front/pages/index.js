@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Header from '../src/components/Header';
 import Jumbotron from '../src/components/Jumbotron';
 import Button from '../src/components/Button';
-import Gooey from '../src/components/Gooey';
 
 const Home = () => {
   const [id, setId] = useState();
@@ -16,7 +15,6 @@ const Home = () => {
     <div>
       <Header />
       <Jumbotron />
-      {/* <Gooey content="hello" /> */}
       <Container>
         <Section>
           <InputContainer>
