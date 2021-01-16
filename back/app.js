@@ -72,7 +72,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
-  res.send(`Hello! mini-link! {process.env.NODE_ENV}` );
+  res.send(`Hello! mini-link! ${process.env.NODE_ENV}` );
 });
 
 app.use('/user', userRouter);
