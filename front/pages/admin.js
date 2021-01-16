@@ -11,6 +11,7 @@ import { userAction } from '../feature/User/slice';
 import { linkAction } from '../feature/Link/slice';
 import { homeAction } from '../feature/Home/slice';
 import MiniLink from '../src/components/MiniLink';
+import Introduction from '../src/components/Introduction';
 import {
   CoverImage,
   CoverButtonList,
@@ -65,6 +66,8 @@ const Admin = () => {
     <>
       <Header mainColor={selectedHome?.mainColor}>
         <CoverImage imageURL={selectedHome?.coverImage}>
+          <Introduction primary content={userInfo?.username} />
+          <Introduction content={selectedHome?.introduction} />
           <CoverButtonList>
             <CoverButton onClick={onLogoutClick}>로그아웃</CoverButton>
             <CoverButton href={`/home/${userInfo?.id}`}>
@@ -98,37 +101,36 @@ const Admin = () => {
         </Section>
         <Section>
           <Title>링크 관리하기</Title>
-          {userLinks &&
-            userLinks.map((link) => (
-              <MiniLink key={link.id} imageURL={link.image}>
-                <div className="content">
-                  <div className="title">
-                    {link.public ? (
-                      <Badge primary text="공개" />
-                    ) : (
-                      <Badge text="비공개" />
-                    )}
-                    <span>{link.name}</span>
-                  </div>
+          <LinksContainer>
+            {userLinks &&
+              userLinks.map((link) => (
+                <MiniLink key={link.id} name={link.name} imageURL={link.image}>
                   <div className="detail">
+                    <div>
+                      {link.public ? (
+                        <Badge primary text="공개" />
+                      ) : (
+                        <Badge text="비공개" />
+                      )}
+                    </div>
                     <div className="click">
                       클릭수<span className="count">{link.VisitCount}</span>
                     </div>
                   </div>
-                </div>
-                <div className="edit">
-                  <CircleButton
-                    icon={<Edit />}
-                    href={`/link/${link.id}`}
-                    outsite
-                  />
-                  <CircleButton
-                    icon={<Delete />}
-                    onClick={onDeleteClick(link.id)}
-                  />
-                </div>
-              </MiniLink>
-            ))}
+                  <div className="edit">
+                    <CircleButton
+                      icon={<Edit />}
+                      href={`/link/${link.id}`}
+                      outsite
+                    />
+                    <CircleButton
+                      icon={<Delete />}
+                      onClick={onDeleteClick(link.id)}
+                    />
+                  </div>
+                </MiniLink>
+              ))}
+          </LinksContainer>
         </Section>
       </Content>
     </>
@@ -138,11 +140,15 @@ const Admin = () => {
 const Header = styled.div`
   background-color: ${(props) => props.mainColor || props.theme.color.yellow};
   height: 240px;
+  width: 100%;
+  position: fixed;
+  z-index: 50;
+  top: 0;
 `;
 
 const Content = styled.div`
   max-width: 600px;
-  margin: 0 auto;
+  margin: 180px auto 100px;
 `;
 
 const Section = styled.div`
@@ -173,6 +179,16 @@ const VisitBanner = styled.div`
   }
   .count {
     padding: 0 20px 0 10px;
+  }
+`;
+
+const LinksContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-right: -10px;
+  > div {
+    width: calc(50% - 20px);
   }
 `;
 

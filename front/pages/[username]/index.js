@@ -77,13 +77,19 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
           <Introduction primary content={username} />
           <Introduction content={miniHome.introduction} />
           <CoverButtonList>
-            <CoverButton outsite icon={<Home />} href={miniHome.website} />
-            <CoverButton
-              outsite
-              icon={<Instagram />}
-              href={`https://www.instagram.com/${miniHome.instagram}`}
-            />
-            <CoverButton outsite icon={<Youtube />} href={miniHome.youtube} />
+            {miniHome.website && (
+              <CoverButton outsite icon={<Home />} href={miniHome.website} />
+            )}
+            {miniHome.instagram && (
+              <CoverButton
+                outsite
+                icon={<Instagram />}
+                href={`https://www.instagram.com/${miniHome.instagram}`}
+              />
+            )}
+            {miniHome.youtube && (
+              <CoverButton outsite icon={<Youtube />} href={miniHome.youtube} />
+            )}
             <CoverButton icon={<Share />} onClick={onShareClick} />
           </CoverButtonList>
         </CoverImage>
@@ -106,22 +112,20 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
         )}
       </Header>
       <Content>
-        {miniLinks &&
-          miniLinks.map((link) => (
-            <a
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={link.id}
-              onClick={onLinkClick(link.id)}
-            >
-              <MiniLink imageURL={link.image}>
-                <div className="content">
-                  <p className="title">{link.name}</p>
-                </div>
-              </MiniLink>
-            </a>
-          ))}
+        <LinksContainer>
+          {miniLinks &&
+            miniLinks.map((link) => (
+              <a
+                key={link.id}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onLinkClick(link.id)}
+              >
+                <MiniLink name={link.name} imageURL={link.image} />
+              </a>
+            ))}
+        </LinksContainer>
       </Content>
     </>
   );
@@ -178,11 +182,15 @@ export async function getServerSideProps(context) {
 const Header = styled.div`
   background-color: ${(props) => props.mainColor || props.theme.color.yellow};
   height: 240px;
+  width: 100%;
+  position: fixed;
+  z-index: 50;
+  top: 0;
 `;
 
 const Content = styled.div`
   max-width: 600px;
-  margin: 0 auto;
+  margin: 240px auto 100px;
   @media screen and ${(props) => props.theme.media.mobile} {
     padding: 0 20px;
   }
@@ -215,6 +223,16 @@ const URLTextarea = styled.textarea`
 const Message = styled.div`
   margin: 1rem 0;
   height: 1rem;
+`;
+
+const LinksContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-right: -10px;
+  > a {
+    width: 50%;
+  }
 `;
 
 export default MiniHome;
