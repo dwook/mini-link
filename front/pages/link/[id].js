@@ -27,12 +27,7 @@ const editLinkPage = () => {
       public: selectedLink?.public,
     },
   });
-
-  useEffect(() => {
-    if (editLinkDone) {
-      router.push('/admin');
-    }
-  }, [editLinkDone]);
+  const watchPublic = watch('public');
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -45,9 +40,13 @@ const editLinkPage = () => {
     formData.append('linkId', id);
     dispatch(linkAction.editLinkRequest(formData));
   };
-
   const goAdmin = () => router.push('/admin');
-  const watchPublic = watch('public');
+
+  useEffect(() => {
+    if (editLinkDone) {
+      router.push('/admin');
+    }
+  }, [editLinkDone]);
 
   return (
     <Layout title="링크 수정하기" icon={<Cross />} onClick={goAdmin}>
@@ -137,7 +136,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch(linkAction.getLinkRequest(context.params.id));
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
-  }
+  },
 );
 
 export default connect((state) => state)(editLinkPage);

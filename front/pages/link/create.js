@@ -16,15 +16,7 @@ const createLinkPage = () => {
   const dispatch = useDispatch();
   const { createLinkDone } = useSelector((state) => state.link);
   const { register, handleSubmit, watch, errors } = useForm();
-
-  useEffect(() => {
-    if (createLinkDone) {
-      router.push('/admin');
-    }
-  }, [createLinkDone]);
-  useEffect(() => {
-    dispatch(linkAction.createLinkReset());
-  }, []);
+  const watchPublic = watch('public', false);
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -35,7 +27,15 @@ const createLinkPage = () => {
     dispatch(linkAction.createLinkRequest(formData));
   };
   const goAdmin = () => router.push('/admin');
-  const watchPublic = watch('public', false);
+
+  useEffect(() => {
+    if (createLinkDone) {
+      router.push('/admin');
+    }
+  }, [createLinkDone]);
+  useEffect(() => {
+    dispatch(linkAction.createLinkReset());
+  }, []);
 
   return (
     <Layout title="링크 추가하기" icon={<Cross />} onClick={goAdmin}>

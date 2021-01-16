@@ -28,13 +28,6 @@ const editHomePage = () => {
     },
   });
 
-  useEffect(() => {
-    if (editHomeDone) {
-      router.push('/admin');
-      dispatch(homeAction.editHomeReset());
-    }
-  }, [editHomeDone]);
-
   const onSubmit = async (data) => {
     const formData = new FormData();
     if (data.image[0]) {
@@ -48,6 +41,13 @@ const editHomePage = () => {
     dispatch(homeAction.editHomeRequest(formData));
   };
   const goAdmin = () => router.push('/admin');
+
+  useEffect(() => {
+    if (editHomeDone) {
+      router.push('/admin');
+      dispatch(homeAction.editHomeReset());
+    }
+  }, [editHomeDone]);
 
   return (
     <Layout title="커버 수정하기" icon={<Cross />} onClick={goAdmin}>
@@ -148,7 +148,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch(homeAction.getHomeRequest(context.params.id));
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
-  }
+  },
 );
 
 export default connect((state) => state)(editHomePage);

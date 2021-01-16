@@ -16,16 +16,16 @@ const login = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const { register, handleSubmit, errors } = useForm();
 
+  const onSubmit = (data) => {
+    dispatch(userAction.logInRequest(data));
+  };
+  const goBack = () => router.back();
+
   useEffect(() => {
     if (userInfo) {
       router.push('/admin');
     }
   }, [userInfo]);
-
-  const onSubmit = (data) => {
-    dispatch(userAction.logInRequest(data));
-  };
-  const goBack = () => router.back();
 
   return (
     <Layout title="로그인" icon={<ArrowLeft />} onClick={goBack}>

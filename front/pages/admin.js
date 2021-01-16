@@ -30,10 +30,18 @@ const Admin = () => {
   const { userInfo, getMyInfoDone } = useSelector((state) => state.user);
   const { selectedHome } = useSelector((state) => state.home);
   const fetcher = (url) => axios.get(url).then((result) => result.data);
-  const { data: visit, error } = useSWR(
+  const { data: visit } = useSWR(
     `${backURL}/visit?homeId=${selectedHome?.id}`,
-    fetcher
+    fetcher,
   );
+
+  const onDeleteClick = (id) => () => {
+    dispatch(linkAction.deleteLinkRequest(id));
+  };
+
+  const onLogoutClick = () => {
+    dispatch(userAction.logOutRequest());
+  };
 
   useEffect(() => {
     dispatch(userAction.getMyInfoRequest());
@@ -53,14 +61,6 @@ const Admin = () => {
       router.push('/');
     }
   }, [userInfo]);
-
-  const onDeleteClick = (id) => () => {
-    dispatch(linkAction.deleteLinkRequest(id));
-  };
-
-  const onLogoutClick = () => {
-    dispatch(userAction.logOutRequest());
-  };
 
   return (
     <>
@@ -209,7 +209,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         },
       };
     }
-  }
+  },
 );
 
 export default Admin;

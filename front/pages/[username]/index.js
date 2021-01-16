@@ -41,7 +41,6 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
       console.log('공유 실패');
     }
   }, []);
-
   const copyToClipboard = (e) => {
     URLRef.current.select();
     document.execCommand('copy');
@@ -51,7 +50,6 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
   useEffect(() => {
     axios.post(`${backURL}/visit?homeId=${miniHome.id}&ip=${ip}`);
   }, []);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCopySuccess('');

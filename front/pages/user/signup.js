@@ -29,6 +29,11 @@ const sigunp = () => {
   const password = useRef();
   password.current = watch('password');
 
+  const onSubmit = (data) => {
+    dispatch(userAction.signUpRequest(data));
+  };
+  const goBack = () => router.back();
+
   useEffect(() => {
     dispatch(userAction.signUpReset());
     setValue('username', id);
@@ -39,11 +44,6 @@ const sigunp = () => {
       dispatch(userAction.checkUserExistRequest(username.current));
     }
   }, [username.current]);
-
-  const onSubmit = (data) => {
-    dispatch(userAction.signUpRequest(data));
-  };
-  const goBack = () => router.back();
 
   return (
     <Layout title="회원가입" icon={<ArrowLeft />} onClick={goBack}>
@@ -94,12 +94,12 @@ const sigunp = () => {
                 {username.current && (
                   <>
                     <Info>
-                      {checkUserExistResult === false
-                        && '사용가능한 아이디입니다.'}
+                      {checkUserExistResult === false &&
+                        '사용가능한 아이디입니다.'}
                     </Info>
                     <Error>
-                      {checkUserExistResult === true
-                        && '이미 사용중인 아이디입니다'}
+                      {checkUserExistResult === true &&
+                        '이미 사용중인 아이디입니다'}
                       {errors.username?.message}
                     </Error>
                   </>
@@ -133,8 +133,9 @@ const sigunp = () => {
                 ref={register({
                   required: '비밀번호를 다시 한번 입력해주세요.',
                   validate: {
-                    confirm: (value) => value === password.current
-                      || '비밀번호를 다르게 입력하셨습니다.',
+                    confirm: (value) =>
+                      value === password.current ||
+                      '비밀번호를 다르게 입력하셨습니다.',
                   },
                 })}
               />
