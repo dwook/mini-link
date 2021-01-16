@@ -35,7 +35,7 @@ exports.getLinks = async (req, res, next) => {
         },
         attributes: {
           include: [
-            [sequelize.fn('COUNT', sequelize.col('visits.id')), 'VisitCount'],
+            [sequelize.fn('COUNT', sequelize.col('Visits.id')), 'VisitCount'],
           ],
         },
         include: [
