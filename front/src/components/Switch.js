@@ -77,8 +77,8 @@ const Switch = forwardRef(({ name }, ref) => (
   <SwitchInput className="switch">
     <label htmlFor={name}>
       <input name={name} type="checkbox" role="switch" id={name} ref={ref} />
-      <span className="container"></span>
-      <span className="circle"></span>
+      <span className="container" />
+      <span className="circle" />
     </label>
   </SwitchInput>
 ));
