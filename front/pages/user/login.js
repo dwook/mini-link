@@ -34,7 +34,7 @@ const login = () => {
           <div className="emoji">🙋‍♀️</div>
           <div className="content">
             아직 가입하지 않으셨나요?
-            <Link href="/user/login">
+            <Link href="/user/signup">
               <a>무료 회원가입</a>
             </Link>
           </div>
