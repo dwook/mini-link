@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(
     cors({
-      origin: 'https://mini-link.site/',
+      origin: 'https://mini-link.site',
       credentials: true,
     })
   );
