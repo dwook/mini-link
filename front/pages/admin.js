@@ -72,19 +72,19 @@ const Admin = () => {
             </CoverButton>
           </CoverButtonList>
         </CoverImage>
+        <VisitBanner>
+          <div className="container">
+            <span>
+              <span className="title">총 방문자</span>
+              <span className="count">{visit?.totalCount}</span>
+            </span>
+            <span>
+              <span className="title">오늘 방문자</span>
+              <span className="count">{visit?.todayCount}</span>
+            </span>
+          </div>
+        </VisitBanner>
       </Header>
-      <VisitBanner>
-        <div className="container">
-          <span>
-            <span className="title">총 방문자</span>
-            <span className="count">{visit?.totalCount}</span>
-          </span>
-          <span>
-            <span className="title">오늘 방문자</span>
-            <span className="count">{visit?.todayCount}</span>
-          </span>
-        </div>
-      </VisitBanner>
       <Content>
         <Section>
           <Title>링크 추가하기</Title>
@@ -145,7 +145,7 @@ const Header = styled.div`
 
 const Content = styled.div`
   max-width: 600px;
-  margin: 180px auto 100px;
+  margin: 300px auto 100px;
 `;
 
 const Section = styled.div`
