@@ -2,22 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-const Jumbotron = () => {
-  const userInfo = useSelector((state) => state.user.userInfo);
-  return (
-    <JumbotronContainer>
-      {userInfo && `${userInfo?.username}님, 안녕하세요!`}
-      {!userInfo && (
-        <>
-          <H1>필요한 유일한 링크 🌿</H1>
-          <H2>단 하나의 링크로 모든 콘텐츠에 연결</H2>
-        </>
-      )}
-    </JumbotronContainer>
-  );
-};
-
-const JumbotronContainer = styled.div`
+const StyledJumbotron = styled.div`
   display: flex;
   justify-content: center;
   algin-items: center;
@@ -47,5 +32,20 @@ const H2 = styled.h1`
     font-size: 1.5rem;
   }
 `;
+
+const Jumbotron = () => {
+  const userInfo = useSelector((state) => state.user.userInfo);
+  return (
+    <StyledJumbotron>
+      {userInfo && `${userInfo?.username}님, 안녕하세요!`}
+      {!userInfo && (
+        <>
+          <H1>필요한 유일한 링크 🌿</H1>
+          <H2>단 하나의 링크로 모든 콘텐츠에 연결</H2>
+        </>
+      )}
+    </StyledJumbotron>
+  );
+};
 
 export default Jumbotron;

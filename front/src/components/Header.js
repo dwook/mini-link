@@ -6,7 +6,7 @@ import { userAction } from '../../feature/User/slice';
 import Button from './Button';
 import Logo from '../icons/Logo';
 
-const HeaderContainer = styled.div`
+const StyledHeader = styled.div`
   display: flex;
   flex-direction: row;
   padding: 20px;
@@ -26,7 +26,7 @@ const Header = () => {
     dispatch(userAction.logOutRequest());
   };
   return (
-    <HeaderContainer>
+    <StyledHeader>
       <Link href="/">
         <a>
           <Logo width={140} />
@@ -53,7 +53,7 @@ const Header = () => {
           </>
         )}
       </div>
-    </HeaderContainer>
+    </StyledHeader>
   );
 };
 

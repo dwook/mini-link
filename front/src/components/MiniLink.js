@@ -63,17 +63,15 @@ const Thumbnail = styled.div`
   background-size: cover;
 `;
 
-const MiniLink = ({ name, imageURL, children }) => {
-  return (
-    <StyledMiniLink>
-      <Thumbnail imageURL={imageURL} />
-      {children}
-      <div className="content">
-        <div className="title">{name}</div>
-      </div>
-    </StyledMiniLink>
-  );
-};
+const MiniLink = ({ name, imageURL, children }) => (
+  <StyledMiniLink>
+    <Thumbnail imageURL={imageURL} />
+    {children}
+    <div className="content">
+      <div className="title">{name}</div>
+    </div>
+  </StyledMiniLink>
+);
 
 MiniLink.propTypes = {
   name: PropTypes.string,
