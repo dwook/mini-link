@@ -41,8 +41,10 @@ const StyledContainer = styled.div`
   padding: 1rem;
   border-radius: 6px;
   border: 1px solid #ddd;
-  width: 400px;
-  min-height: 250px;
+  width: 90%;
+  max-width: 400px;
+  z-index: 100;
+  box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
 `;
 
 const Header = styled.div`
