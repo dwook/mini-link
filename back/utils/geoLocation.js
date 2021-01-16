@@ -2,8 +2,8 @@ require('dotenv').config();
 const axios = require('axios');
 const CryptoJS = require('crypto-js');
 
-const access_key = process.env.ACCESS_KEY;
-const secret_key = process.env.SECRET_KEY;
+const access_key = process.env.NAVER_GEO_ACCESS_KEY;
+const secret_key = process.env.NAVER_GEO_SECRET_KEY;
 
 const requestMethod = 'GET';
 const hostName = 'https://geolocation.apigw.ntruss.com';
@@ -63,7 +63,7 @@ exports.geoLocation = async (ip) => {
 
   try {
     const { data } = await axios.get(`${hostName}${baseString}`, config);
-    console.log('---데이터', data);
+    console.log('데이터', data);
     return data;
   } catch (error) {
     console.log(error.response.data);

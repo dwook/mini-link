@@ -1,4 +1,4 @@
-const { Visit, Link, Home } = require('../models');
+const { Visit } = require('../models');
 const getGeo = require('../utils/geoLocation').geoLocation;
 const { Op } = require('sequelize');
 
@@ -37,10 +37,10 @@ exports.getVisitCount = async (req, res, next) => {
 exports.postVisit = async (req, res, next) => {
   try {
     const ip = req.query.ip;
-    console.log('----아이피', ip);
+    console.log('아이피', ip);
     const { requestId, geoLocation } = await getGeo(ip);
     const { country, lat, long, r1, r2, r3 } = geoLocation;
-    console.log('----지오', geoLocation);
+    console.log('지역정보', geoLocation);
 
     const visit = {
       requestId,
