@@ -16,6 +16,11 @@ const StyledCircleButton = styled.button`
   &:hover {
     opacity: 0.8;
   }
+  @media screen and ${(props) => props.theme.media.mobile} {
+    height: 40px;
+    width: 40px;
+    margin: 2px;
+  }
   ${(props) => {
     if (props.primary) {
       return `
