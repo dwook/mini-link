@@ -7,6 +7,7 @@ const StyledContainer = styled.div`
   line-height: 2;
   display: inline;
   padding: 0.5rem 1rem;
+  white-space: pre-wrap;
   ${(props) => {
     if (props.primary) {
       return `
