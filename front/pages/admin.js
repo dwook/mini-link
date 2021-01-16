@@ -44,9 +44,6 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    dispatch(userAction.getMyInfoRequest());
-  }, []);
-  useEffect(() => {
     if (userInfo) {
       dispatch(homeAction.getHomeRequest(userInfo?.username));
     }
