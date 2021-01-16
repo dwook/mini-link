@@ -63,7 +63,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      domain: process.env.NODE_ENV === 'production' && '.mini-link.site',
+      domain: process.env.NODE_ENV === 'production' && 'mini-link.site',
     },
   })
 );
@@ -72,7 +72,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
-  res.send('Hello! mini-link!');
+  res.send(`Hello! mini-link! {process.env.NODE_ENV}` );
 });
 
 app.use('/user', userRouter);
