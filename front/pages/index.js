@@ -22,7 +22,7 @@ const Home = () => {
               <span className="domain">https://mini-link.site/</span>
               <input onChange={onInputChange} value={id} />
             </div>
-            <Link href={`/user/signup?id=${id}`}>
+            <Link href={id ? `/user/signup?id=${id}` : '/user/signup'}>
               <a>
                 <Button primary full>
                   시작하기
