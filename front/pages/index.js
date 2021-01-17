@@ -200,7 +200,11 @@ const Item = styled.div`
     white-space: nowrap;
   }
   .url {
-    padding: 10px;
+    display: inline-block;
+    position: absolute;
+    top: 38px;
+    left: 0;
+    padding: 0 10px;
     background: #fff;
     color: #bababa;
     white-space: nowrap;
