@@ -12,6 +12,7 @@ import {
 } from '../../src/components/CoverImage';
 import Modal from '../../src/components/Modal';
 import Button from '../../src/components/Button';
+import Footer from '../../src/components/Footer';
 import { Home, Instagram, Youtube, Share } from '../../src/icons';
 import { backURL } from '../../config';
 
@@ -24,7 +25,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
     (linkId) => () => {
       axios.post(`${backURL}/visit?linkId=${linkId}&ip=${ip}`);
     },
-    []
+    [],
   );
   const onShareClick = useCallback(() => {
     try {
@@ -125,6 +126,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
             ))}
         </LinksContainer>
       </Content>
+      <Footer />
     </>
   );
 };
