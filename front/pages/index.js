@@ -180,10 +180,11 @@ const Item = styled.div`
   }
   .info {
     position: absolute;
+    width: 80%;
     top: 12px;
     left: 0;
     text-align: left;
-    line-height: 2.4;
+    line-height: 2.8;
   }
   .category {
     padding: 10px;
