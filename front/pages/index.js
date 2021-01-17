@@ -191,16 +191,18 @@ const Item = styled.div`
     font-weight: bold;
     background-color: ${(props) => props.theme.color.primary};
     color: #fff;
+    white-space: nowrap;
   }
   .name {
     padding: 10px;
     background: #fff;
+    white-space: nowrap;
   }
   .url {
     padding: 10px;
-    white-space: nowrap;
     background: #fff;
     color: #bababa;
+    white-space: nowrap;
     strong {
       font-weight: bold;
       color: ${(props) => props.theme.color.primary};
