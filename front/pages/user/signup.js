@@ -40,7 +40,6 @@ const sigunp = () => {
   }, []);
   useEffect(() => {
     if (username.current) {
-      console.log(username, username.current);
       dispatch(userAction.checkUserExistRequest(username.current));
     }
   }, [username.current]);
