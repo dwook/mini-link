@@ -33,7 +33,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
         navigator.share({
           title: `${username} 미니링크`,
           text: miniHome.introduction,
-          url: `${backURL}/${username}`,
+          url: `https://mini-link.site/${username}`,
         });
       } else {
         setModalOpen(true);
@@ -66,7 +66,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
         <title>{username} 미니링크</title>
         <meta property="og:title" content={`${username} 미니링크`} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${backURL}/${username}`} />
+        <meta property="og:url" content={`https://mini-link.site/${username}`} />
         <meta property="og:description" content={miniHome.introduction} />
         <meta property="og:image" content={miniHome.coverImage} />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -100,7 +100,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
                 <URLTextarea
                   readOnly
                   ref={URLRef}
-                  value={`${backURL}/${username}`}
+                  value={`https://mini-link.site/${username}`}
                 />
               </form>
               <Button primary big full onClick={copyToClipboard}>
