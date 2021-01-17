@@ -16,10 +16,10 @@ const StyledJumbotron = styled.div`
 const H1 = styled.h1`
   color: #fff;
   padding: 1.5rem;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: bold;
   @media screen and ${(props) => props.theme.media.mobile} {
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding: 1rem;
   }
 `;
@@ -27,9 +27,9 @@ const H1 = styled.h1`
 const H2 = styled.h1`
   color: #fff;
   font-size: 2rem;
-  fonte-weight: bold;
+  line-height: 1.2;
   @media screen and ${(props) => props.theme.media.mobile} {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 `;
 
@@ -40,8 +40,8 @@ const Jumbotron = () => {
       {userInfo && `${userInfo?.username}님, 안녕하세요!`}
       {!userInfo && (
         <>
-          <H1>필요한 유일한 링크 🌿</H1>
-          <H2>단 하나의 링크로 모든 콘텐츠에 연결</H2>
+          <H1>💛 한번에 보여주는 멀티링크 🌿</H1>
+          <H2>전달하고 싶은 모든 링크를 한페이지에 담아요!</H2>
         </>
       )}
     </StyledJumbotron>

@@ -47,7 +47,7 @@ const Header = () => {
           <>
             <Link href="/user/login">
               <a>
-                <Button>로그인</Button>
+                <Button primary>로그인</Button>
               </a>
             </Link>
           </>

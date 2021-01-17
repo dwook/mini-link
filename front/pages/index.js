@@ -5,6 +5,30 @@ import Header from '../src/components/Header';
 import Jumbotron from '../src/components/Jumbotron';
 import Button from '../src/components/Button';
 
+const CASELIST = [
+  {
+    id: 'vivastudio',
+    category: 'fashion',
+    name: '비바스튜디오',
+    img:
+      'https://mini-link.s3.ap-northeast-2.amazonaws.com/original/1610891465951_vivastudio_cover.jpg',
+  },
+  {
+    id: 'alicefunk',
+    category: 'influencer',
+    name: '앨리스펑크',
+    img:
+      'https://mini-link.s3.ap-northeast-2.amazonaws.com/original/1610891792221_alicefunk_cover.jpg',
+  },
+  {
+    id: 'hellonature',
+    category: 'food',
+    name: '헬로네이처',
+    img:
+      'https://mini-link.s3.ap-northeast-2.amazonaws.com/original/1610894213199_hellonature_cover.jpg',
+  },
+];
+
 const Home = () => {
   const [id, setId] = useState();
   const onInputChange = (e) => {
@@ -31,6 +55,25 @@ const Home = () => {
             </Link>
           </InputContainer>
         </Section>
+        <Showcase>
+          <div className="title">SHOWCASE</div>
+          <div className="list">
+            {CASELIST.map((item) => (
+              <a key={item.id} href={`https://mini-link.site/${item.id}`}>
+                <Item>
+                  <div className="info">
+                    <span className="category">{item.category}</span>
+                    <span className="name"> {item.name}</span>
+                    <span className="url">
+                      https://mini-link.site/<strong>{item.id}</strong>
+                    </span>
+                  </div>
+                  <Thumbnail src={item.img} />
+                </Item>
+              </a>
+            ))}
+          </div>
+        </Showcase>
       </Container>
     </div>
   );
@@ -90,6 +133,85 @@ const InputContainer = styled.div`
       width: 100%;
     }
   }
+`;
+
+const Showcase = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 1024px;
+  margin: 30px auto 100px;
+  .title {
+    width: 100%;
+    font-size: 2rem;
+    color: #eaeaea;
+    margin: 0 0 30px;
+    font-weight: 300;
+  }
+  .list {
+    width: 100%;
+    display: flex;
+    a {
+      width: 100%;
+      color: #2c3848;
+    }
+    @media screen and ${(props) => props.theme.media.mobile} {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+`;
+
+const Item = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-contnet: center;
+  align-items: center;
+  position: relative;
+  margin: 10px;
+  @media screen and ${(props) => props.theme.media.mobile} {
+    width: 90%;
+    margin: 20px auto;
+  }
+  .info {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    text-align: left;
+    line-height: 2.4;
+  }
+  .category {
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: ${(props) => props.theme.color.primary};
+    color: #fff;
+  }
+  .name {
+    padding: 10px;
+    background: #fff;
+  }
+  .url {
+    padding: 10px;
+    white-space: nowrap;
+    background: #fff;
+    color: #bababa;
+    strong {
+      font-weight: bold;
+      color: ${(props) => props.theme.color.primary};
+    }
+  }
+`;
+
+const Thumbnail = styled.div`
+  background-image: url(${(props) => props.src});
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  padding-top: 200px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 `;
 
 export default Home;
