@@ -5,29 +5,37 @@ import styled from 'styled-components';
 const StyledMiniLink = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px 10px;
+  margin: 20px 10px 0;
   align-items: center;
   background: #fff;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,.2);
+  border-radius: 6px;
   .content {
     text-align: left;
     color: ${(props) => props.theme.color.darkgray};
     font-size: 16px;
     position: absolute;
-    bottom: 0.5rem;
+    bottom: 1.5rem;
     left: 0;
     @media screen and ${(props) => props.theme.media.mobile} {
       font-size: 14px;
+      bottom: 0.5rem;
     }
   }
   .title {
     display: inline;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem;
     background: #fff;
     max-width: 80%;
     line-height: 1.8;
     white-space: pre-wrap;
+    font-size: 16px;
+    letter-spacing: -0.05rem;
+    @media screen and ${(props) => props.theme.media.mobile} {
+      font-size: 14px;
+    }
   }
   .detail {
     position: absolute;

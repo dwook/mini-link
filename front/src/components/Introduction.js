@@ -8,6 +8,10 @@ const StyledContainer = styled.div`
   display: inline;
   padding: 0.5rem 1rem;
   white-space: pre-wrap;
+  @media screen and ${(props) => props.theme.media.mobile} {
+    font-size: 16px;
+    line-height: 2.2;
+  }
   ${(props) => {
     if (props.primary) {
       return `
