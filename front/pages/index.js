@@ -59,7 +59,12 @@ const Home = () => {
           <div className="title">SHOWCASE</div>
           <div className="list">
             {CASELIST.map((item) => (
-              <a key={item.id} href={`https://mini-link.site/${item.id}`}>
+              <a
+                key={item.id}
+                href={`https://mini-link.site/${item.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Item>
                   <div className="info">
                     <span className="category">{item.category}</span>
