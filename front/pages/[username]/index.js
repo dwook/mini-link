@@ -17,7 +17,7 @@ import { Home, Instagram, Youtube, Share } from '../../src/icons';
 import { backURL } from '../../config';
 
 const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [copySuccess, setCopySuccess] = useState('');
   const URLRef = useRef(null);
 
@@ -25,7 +25,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
     (linkId) => () => {
       axios.post(`${backURL}/visit?linkId=${linkId}&ip=${ip}`);
     },
-    [],
+    []
   );
   const onShareClick = useCallback(() => {
     try {
@@ -36,7 +36,7 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
           url: `https://mini-link.site/${username}`,
         });
       } else {
-        setModalOpen(true);
+        setIsModalOpen(true);
       }
     } catch (e) {
       console.log('공유 실패');
@@ -66,7 +66,10 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
         <title>{username} 미니링크</title>
         <meta property="og:title" content={`${username} 미니링크`} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://mini-link.site/${username}`} />
+        <meta
+          property="og:url"
+          content={`https://mini-link.site/${username}`}
+        />
         <meta property="og:description" content={miniHome.introduction} />
         <meta property="og:image" content={miniHome.coverImage} />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -92,8 +95,8 @@ const MiniHome = ({ miniHome, miniLinks, username, ip }) => {
             <CoverButton icon={<Share />} onClick={onShareClick} />
           </CoverButtonList>
         </CoverImage>
-        {modalOpen && (
-          <Modal onClick={setModalOpen}>
+        {isModalOpen && (
+          <Modal onModalCloseHandler={setIsModalOpen}>
             <URLContainer>
               <Message>{copySuccess}</Message>
               <form>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Cross } from '../icons';
@@ -30,10 +30,14 @@ const CloseButton = styled.button`
   right: 0;
 `;
 
-const Modal = ({ children, onClick }) => {
+const Modal = ({ children, onModalCloseHandler }) => {
+  const [isOpen, setIsOpen] = useState(true);
   const onCloseClick = () => {
-    onClick(false);
+    const handler = onModalCloseHandler || setIsOpen;
+    handler(false);
   };
+
+  if (!isOpen) return null;
 
   return (
     <StyledContainer>
@@ -49,12 +53,12 @@ const Modal = ({ children, onClick }) => {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  onClick: PropTypes.func,
+  onModalCloseHandler: PropTypes.func,
 };
 
 Modal.defaultProps = {
   children: null,
-  onClick: null,
+  onModalCloseHandler: null,
 };
 
 export default Modal;
