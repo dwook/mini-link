@@ -28,7 +28,7 @@
 - Sequelize
 - Passport
 
-## Deployment
+## (3) Deployment
 - AWS EC2를 이용한 Frontend, Backend 서버를 각각 배포
 - Nginx를 이용한 리버스프록시 설정 및 HTTPS/SSL 적용
 - pm2를 이용한 Node.js 프로세스 관리
@@ -65,6 +65,6 @@ NAVER_GEO_SECRET_KEY=
 ```
 
 # Things to do
-[] 프론트엔드 테스트 코드 작성
-[] 백엔드 테스트 코드 작성
-[] 접속 로그를 활용한 데이터 시각화
+- [ ] 프론트엔드 테스트 코드 작성
+- [ ] 백엔드 테스트 코드 작성
+- [ ] 접속 로그를 활용한 데이터 시각화
