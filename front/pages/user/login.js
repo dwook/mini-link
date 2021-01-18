@@ -13,7 +13,7 @@ import { ArrowLeft } from '../../src/icons';
 const login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const { userInfo, logInError } = useSelector((state) => state.user);
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -64,6 +64,9 @@ const login = () => {
           </Message>
         </Row>
         <Outro>
+          <Message>
+            <Error>{logInError}</Error>
+          </Message>
           <Button primary big type="submit">
             미니링크 로그인
           </Button>
@@ -100,7 +103,7 @@ const Intro = styled.div`
 const Outro = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px 0 100px;
+  margin: 0 0 100px;
   padding: 0 20px;
 `;
 

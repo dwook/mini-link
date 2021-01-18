@@ -47,7 +47,7 @@ const Label = styled.label`
 
 const Message = styled.div`
   height: 14px;
-  margin: 10px;
+  margin: 10px 5px 5px;
   font-size: 12px;
 `;
 

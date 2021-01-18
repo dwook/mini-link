@@ -21,8 +21,9 @@ const sigunp = () => {
   const router = useRouter();
   const { id } = router.query;
   const dispatch = useDispatch();
-  const signUpDone = useSelector((state) => state.user.signUpDone);
-  const { checkUserExistResult } = useSelector((state) => state.user);
+  const { signUpDone, signUpError, checkUserExistResult } = useSelector(
+    (state) => state.user
+  );
   const { register, handleSubmit, setValue, watch, errors } = useForm();
   const username = useRef();
   username.current = watch('username');
@@ -160,6 +161,9 @@ const sigunp = () => {
               </Message>
             </Row>
             <Outro>
+              <Message>
+                <Error>{signUpError}</Error>
+              </Message>
               <Button primary big full type="submit">
                 미니링크 가입하기
               </Button>
