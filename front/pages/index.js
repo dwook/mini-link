@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { END } from 'redux-saga';
+import axios from 'axios';
+import wrapper from '../store';
+import { userAction } from '../feature/User/slice';
 import Header from '../src/components/Header';
 import Jumbotron from '../src/components/Jumbotron';
 import Button from '../src/components/Button';
@@ -83,6 +87,19 @@ const Home = () => {
     </div>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    context.store.dispatch(userAction.getMyInfoRequest());
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 const Container = styled.div`
   text-align: center;

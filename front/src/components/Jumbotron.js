@@ -1,6 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Button from './Button';
 
 const StyledJumbotron = styled.div`
   display: flex;
@@ -11,6 +13,15 @@ const StyledJumbotron = styled.div`
   height: 270px;
   background-color: ${(props) => props.theme.color.primary};
   text-align: center;
+  .container {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  .emoji {
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
 `;
 
 const H1 = styled.h1`
@@ -26,6 +37,7 @@ const H1 = styled.h1`
 
 const H2 = styled.h1`
   color: #fff;
+  padding: 1rem;
   font-size: 2rem;
   line-height: 1.2;
   @media screen and ${(props) => props.theme.media.mobile} {
@@ -37,7 +49,19 @@ const Jumbotron = () => {
   const { userInfo } = useSelector((state) => state.user);
   return (
     <StyledJumbotron>
-      {userInfo && `${userInfo?.username}님, 안녕하세요!`}
+      {userInfo && (
+        <div className="container">
+          <div className="emoji">😃</div>
+          <H2>{`${userInfo?.username}님, 안녕하세요!`}</H2>
+          <Link href="/admin">
+            <a>
+              <Button full>
+                관리자 페이지로 이동
+              </Button>
+            </a>
+          </Link>
+        </div>
+      )}
       {!userInfo && (
         <>
           <H1>💛 한번에 보여주는 멀티링크 🌿</H1>
