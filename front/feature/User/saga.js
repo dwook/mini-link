@@ -70,7 +70,7 @@ function* logIn(action) {
     yield put(userAction.logInSuccess(result));
   } catch (error) {
     console.error(error);
-    yield put(userAction.logInFailure(error));
+    yield put(userAction.logInFailure(error.response.data));
   }
 }
 

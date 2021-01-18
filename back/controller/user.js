@@ -68,7 +68,7 @@ exports.login = (req, res, next) => {
       return next(err);
     }
     if (info) {
-      return res.status(401).send(info.reason);
+      return res.status(401).json({ message: info.reason });
     }
     return req.login(user, async (loginError) => {
       if (loginError) {
