@@ -42,7 +42,7 @@ const Home = () => {
       <Container>
         <Section>
           <InputContainer>
-            <div>
+            <div className="container">
               <span className="domain">https://mini-link.site/</span>
               <input onChange={onInputChange} value={id} />
             </div>
@@ -99,7 +99,7 @@ const Section = styled.div`
 
 const InputContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 16px;
   background-color: #fff;
@@ -109,8 +109,10 @@ const InputContainer = styled.div`
   max-width: 450px;
   margin: 0 auto;
   font-size: 16px;
-  div {
+  .container {
     flex: 1 1 0;
+    padding-left: 10px;
+    text-align: left;
   }
   .domain {
     color: #bababa;
