@@ -32,7 +32,7 @@
   <img src="example/link_edit.jpg" width="300" height='587'>
 
 6. 페이지 방문자들이 보게 될 페이지
-  <img src="example/home.jpg" width="300" height='605'>
+  <img src="example/home.png" width="300" height='605'>
 
 # Skills
 
