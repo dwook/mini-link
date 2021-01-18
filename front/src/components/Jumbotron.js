@@ -34,7 +34,7 @@ const H2 = styled.h1`
 `;
 
 const Jumbotron = () => {
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const { userInfo } = useSelector((state) => state.user);
   return (
     <StyledJumbotron>
       {userInfo && `${userInfo?.username}님, 안녕하세요!`}

@@ -20,7 +20,7 @@ const StyledHeader = styled.div`
 `;
 
 const Header = () => {
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const { userInfo } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const onLogoutClick = () => {
     dispatch(userAction.logOutRequest());
