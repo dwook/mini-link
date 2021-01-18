@@ -67,6 +67,7 @@ const Home = () => {
         </Section>
         <Showcase>
           <div className="title">SHOWCASE</div>
+          <div className="notice">※ 예시를 위한 작업으로 실제 업체가 운영하는 페이지가 아닙니다.</div>
           <div className="list">
             {CASELIST.map((item) => (
               <a
@@ -178,6 +179,9 @@ const Showcase = styled.div`
     color: #eaeaea;
     margin: 0 0 30px;
     font-weight: 300;
+  }
+  .notice {
+    margin-bottom: 20px;
   }
   .list {
     width: 100%;
