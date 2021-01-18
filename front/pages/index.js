@@ -16,6 +16,8 @@ const CASELIST = [
     name: '비바스튜디오',
     img:
       'https://mini-link.s3.ap-northeast-2.amazonaws.com/original/1610891465951_vivastudio_cover.jpg',
+    mockup:
+      'https://mini-link.s3.ap-northeast-2.amazonaws.com/mockups_vivastudio.png',
   },
   {
     id: 'alicefunk',
@@ -23,6 +25,8 @@ const CASELIST = [
     name: '앨리스펑크',
     img:
       'https://mini-link.s3.ap-northeast-2.amazonaws.com/original/1610891792221_alicefunk_cover.jpg',
+    mockup:
+      'https://mini-link.s3.ap-northeast-2.amazonaws.com/mockups_alicefunk.png',
   },
   {
     id: 'hellonature',
@@ -30,6 +34,8 @@ const CASELIST = [
     name: '헬로네이처',
     img:
       'https://mini-link.s3.ap-northeast-2.amazonaws.com/original/1610894213199_hellonature_cover.jpg',
+    mockup:
+      'https://mini-link.s3.ap-northeast-2.amazonaws.com/mockups_hellonature.png',
   },
 ];
 
@@ -77,7 +83,9 @@ const Home = () => {
                       https://mini-link.site/<strong>{item.id}</strong>
                     </span>
                   </div>
-                  <Thumbnail src={item.img} />
+                  <Thumbnail src={item.img}>
+                    <img className="mockup" src={item.mockup} alt={item.name} />
+                  </Thumbnail>
                 </Item>
               </a>
             ))}
@@ -98,7 +106,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch(userAction.getMyInfoRequest());
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
-  }
+  },
 );
 
 const Container = styled.div`
@@ -163,7 +171,7 @@ const Showcase = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1024px;
-  margin: 30px auto 100px;
+  margin: 30px auto 200px;
   .title {
     width: 100%;
     font-size: 2rem;
@@ -195,7 +203,7 @@ const Item = styled.div`
   margin: 10px;
   @media screen and ${(props) => props.theme.media.mobile} {
     width: 90%;
-    margin: 20px auto;
+    margin: 20px auto 50px;
   }
   .info {
     position: absolute;
@@ -243,6 +251,15 @@ const Thumbnail = styled.div`
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  .mockup {
+    position: absolute;
+    bottom: -85px;
+    right: 20px;
+    width: 100px;
+    @media screen and ${(props) => props.theme.media.mobile} {
+      bottom: -32px;
+    }
+  }
 `;
 
 export default Home;
